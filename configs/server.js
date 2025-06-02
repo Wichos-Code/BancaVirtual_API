@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { dbConnection } from "./mongo.js";
 import { swaggerDocs, swaggerUi } from "./swagger.js";
+import apiLimiter from "../src/middlewares/request-limit.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({extended: false}))
@@ -25,6 +26,7 @@ const middlewares = (app) => {
         },
     }));
     app.use(morgan("dev"))
+    app.use(apiLimiter)
 
 }
 
