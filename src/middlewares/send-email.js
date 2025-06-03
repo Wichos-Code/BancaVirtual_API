@@ -97,7 +97,7 @@ export const sendVerificationEmail = async (email, code) => {
       {
         filename: 'LogoBF.png',
         path: path.join(__dirname, '../../public/uploads/email/LogoBF.png'),
-        cid: 'wichoslogo',
+        cid: 'byteforce logo'
       }
     ]
   };
