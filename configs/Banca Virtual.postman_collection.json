@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "46178aec-39ca-467e-9cf8-db470a6c0278",
+		"name": "Banca Virtual",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37585551"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEwMDY5YTg0YTdlNTEwZGM4ZGRlNzEiLCJpYXQiOjE3NDU4ODA3NTAsImV4cCI6MTc0NTg4NDM1MH0.qZqIDRv4Eh2CfxSWudheEw5DpLFOkNOs76SapFQQfTg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dpi\":2154630128745,\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registe user",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/:code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"verify",
+						":code"
+					],
+					"variable": [
+						{
+							"key": "code",
+							"value": "896791"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
