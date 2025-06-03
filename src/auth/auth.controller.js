@@ -9,12 +9,12 @@ const createAdminUser = async () => {
 
 
         if (!existingAdmin) {
-            const hashedPassword = await hash("admin");
+            const hashedPassword = await hash("ADMINB");
 
             const admin = new User({
                 name: "Admin",
                 surname: "Bank",
-                username: "admin",
+                username: "ADMINB",
                 email: "admin_bankk@gmail.com",
                 dpi:2154630128745,
                 phone:"23145210",
@@ -94,9 +94,11 @@ export const verifyEmail = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { dpi, password } = req.body
+    const { dpi, username, password } = req.body
     try{
-        const user = await User.findOne({dpi: dpi})
+        const user = await User.findOne({
+            $or:[{username: username}, {dpi: dpi}]
+        })
 
         if(!user){
             return res.status(400).json({
