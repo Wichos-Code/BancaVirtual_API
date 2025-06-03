@@ -17,6 +17,8 @@ const createAdminUser = async () => {
                 username: "ADMINB",
                 email: "admin_bankk@gmail.com",
                 dpi:2154630128745,
+                direction: "6 avenida 13-54 zona 7, Colonia Landívar",
+                income:100,
                 phone:"23145210",
                 password: hashedPassword,
                 role: "ADMIN_ROLE", 

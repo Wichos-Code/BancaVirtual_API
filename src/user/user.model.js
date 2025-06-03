@@ -30,6 +30,15 @@ const userSchema = Schema({
         required: [true, "Email is required"],
         unique: true
     },
+    direction:{
+        type: String,
+        required: true
+    },
+    income:{
+        type: Number,
+        required: true,
+        min: 100
+    },
     phone:{
         type: String,
         required: false,
