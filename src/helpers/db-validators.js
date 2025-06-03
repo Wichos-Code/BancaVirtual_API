@@ -13,3 +13,9 @@ export const usernameExist = async(username = '') =>{
         throw new Error(`El email ${username} ya fue registrado previamente`)
     }
 }
+
+export const validateIncome = async(income) => {
+    if(income < 100 ) {
+        throw new Error("Usuario rechazado para el banco por ingresos")
+    }
+}

@@ -5,7 +5,7 @@ import { generateJWT } from "../helpers/generate-jwt.js";
 
 const createAdminUser = async () => {
     try {
-        const existingAdmin = await User.findOne({ username: "admin" });
+        const existingAdmin = await User.findOne({ username: "ADMINB" });
 
 
         if (!existingAdmin) {
