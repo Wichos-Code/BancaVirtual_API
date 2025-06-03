@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { dbConnection } from "./mongo.js";
 import { swaggerDocs, swaggerUi } from "./swagger.js";
 import apiLimiter from "../src/middlewares/request-limit.js";
+import authRoutes from "../src/auth/auth.routes.js"
 
 const middlewares = (app) => {
     app.use(express.urlencoded({extended: false}))
@@ -32,6 +33,7 @@ const middlewares = (app) => {
 
 const routes = (app) => {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+    app.use("/virtualBank/v1/auth", authRoutes)
 }
 
 const connectDB = async () => {

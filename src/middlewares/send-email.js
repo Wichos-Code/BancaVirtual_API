@@ -78,7 +78,7 @@ export const sendVerificationEmail = async (email, code) => {
       <body>
         <div class="container">
           <div class="header">
-            <img src="cid:wichoslogo" alt="Wichos Code Logo" />
+            <img src="cid:byteforce logo" alt="ByteForce Logo" />
             <h2>Verificación de Cuenta</h2>
           </div>
           <div class="content">
@@ -87,7 +87,7 @@ export const sendVerificationEmail = async (email, code) => {
             <p style="margin-top: 20px;">Si no fuiste tú quien se registró, puedes ignorar este mensaje.</p>
           </div>
           <div class="footer">
-            © 2025 Wicho's Code. Todos los derechos reservados.
+            © 2025 Byte Force. Todos los derechos reservados.
           </div>
         </div>
       </body>
@@ -95,8 +95,8 @@ export const sendVerificationEmail = async (email, code) => {
     `,
     attachments: [
       {
-        filename: 'WichosCodeLogo.png',
-        path: path.join(__dirname, '../../public/uploads/email/WichosCodeLogo.png'),
+        filename: 'LogoBF.png',
+        path: path.join(__dirname, '../../public/uploads/email/LogoBF.png'),
         cid: 'wichoslogo',
       }
     ]
