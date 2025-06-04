@@ -1,4 +1,5 @@
 import Account from "./account.model.js";
+import Transaction from "../transaction/transaction.model.js";
 
 const generateRandomAccountNumber = () => {
     return Math.floor(1000000000 + Math.random() * 9000000000);
@@ -214,6 +215,18 @@ export const deposit = async (req, res) => {
         await originAccount.save();
         await targetAccount.save();
 
+        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
+        o retiros que realicen en las cuentas.
+        */
+        await Transaction.create({
+            fromAccount: originAccount.noAccount,
+            toAccount: targetAccount.noAccount,
+            amount,
+            type: "DEPOSIT",
+            currency: originAccount.currency,
+            user: originAccount.user,
+        });
+
         res.status(201).json({
             success: true,
             message: "Depósito realizado exitosamente",
@@ -229,3 +242,38 @@ export const deposit = async (req, res) => {
         });
     }
 };
+
+export const getAccountTransactions = async (req, res) => {
+
+    const userId = req.usuario.id;
+    const { accountNo } = req.body;
+
+    try {
+
+        const account = await Account.findOne({ noAccount: accountNo, user: userId });
+
+        if (!account) {
+            return res.status(404).json({ error: "Cuenta no encontrada o no te pertenece" });
+        }
+
+        const transactions = await Transaction.find({
+            $or: [
+                { fromAccount: accountNo },
+                { toAccount: accountNo }
+            ]
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            transactions,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener el historial",
+            error: error.message,
+        });
+    }
+};
+

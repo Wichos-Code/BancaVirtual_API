@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount } from "./account.controller.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions } from "./account.controller.js"
 import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator } from "../middlewares/account-validator.js"
 
 const router = Router()
@@ -316,5 +316,70 @@ router.post("/createDeposit", depositAccountValidator, deposit)
  */
 
 router.post("/getByMyNoAccount", getMyAccountsValidator, getMyNoAccount)
+
+/**
+ * @swagger
+ * /getDepositHistory:
+ *   post:
+ *     summary: Get the deposit/transaction history for one of your accounts
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               accountNo:
+ *                 type: number
+ *                 description: Your account number to get the transaction history
+ *                 example: 1234567890
+ *     responses:
+ *       200:
+ *         description: List of transactions retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 transactions:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       fromAccount:
+ *                         type: number
+ *                         example: 1234567890
+ *                       toAccount:
+ *                         type: number
+ *                         example: 9876543210
+ *                       amount:
+ *                         type: number
+ *                         example: 100
+ *                       type:
+ *                         type: string
+ *                         example: "DEPOSIT"
+ *                       currency:
+ *                         type: string
+ *                         example: "USD"
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                         example: "2025-06-04T12:00:00Z"
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Account not found or does not belong to you
+ *       500:
+ *         description: Internal server error
+ */
+
+
+router.post("/getDepositHistory", getMyAccountsValidator, getAccountTransactions)
 
 export default router

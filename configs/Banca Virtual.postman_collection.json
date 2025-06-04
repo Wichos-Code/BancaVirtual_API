@@ -193,7 +193,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTkwNDgsImV4cCI6MTc0OTAyMjY0OH0.i8b1uOhBK4tSmgN2_GyuXwzTPWSstXNcbxA2OHxhC3o",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
 									"type": "string"
 								}
 							]
@@ -202,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fromAccount\": \"3837018551\",\r\n    \"toAccount\": \"1259245998\",\r\n    \"amount\": \"800\"\r\n}",
+							"raw": "{\r\n    \"fromAccount\": \"3837018551\",\r\n    \"toAccount\": \"1259245998\",\r\n    \"amount\": \"400\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -234,7 +234,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
 									"type": "string"
 								}
 							]
@@ -262,6 +262,47 @@
 								"v1",
 								"account",
 								"getByMyNoAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get History Deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNo\": \"3837018551\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getDepositHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getDepositHistory"
 							]
 						}
 					},
