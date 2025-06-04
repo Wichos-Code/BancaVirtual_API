@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getUsers } from "./user.controller.js";
-import { getUsersValidator } from "../middlewares/user-validator.js";
+import { getUsers, updateUserA } from "./user.controller.js";
+import { getUsersValidator, updateUserAValidator } from "../middlewares/user-validator.js";
 
 const router = Router()
 
@@ -10,5 +10,11 @@ router.get(
     getUsers
 )
 
+
+router.put(
+    "/update/:dpi",
+    updateUserAValidator,
+    updateUserA
+)
 
 export default router

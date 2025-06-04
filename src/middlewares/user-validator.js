@@ -44,3 +44,12 @@ export const getUsersValidator = [
     validateFields,
     handleErrors
 ]
+
+export const updateUserAValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE"),
+    body("email").custom(emailExist),
+    body("username").custom(usernameExist),
+    validateFields,
+    handleErrors
+]
