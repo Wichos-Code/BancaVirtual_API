@@ -9,7 +9,7 @@ const createAdminUser = async () => {
 
 
         if (!existingAdmin) {
-            const hashedPassword = await hash("ADMINB");
+            const hashedPassword = await hash("Admin1234");
 
             const admin = new User({
                 name: "Admin",
@@ -105,7 +105,7 @@ export const login = async (req, res) => {
         if(!user){
             return res.status(400).json({
                 message: "Crendenciales inválidas",
-                error:"No existe el usuario o correo ingresado"
+                error:"No existe el usuario o dpi ingresado"
             })
         }
 
@@ -125,7 +125,10 @@ export const login = async (req, res) => {
             userDetails: {
                 token: token,
                 name: user.name,
-                surname: user.surname
+                surname: user.surname,
+                dpi: user.dpi,
+                income: user.income,
+                role: user.role
             }
         })
     }catch(err){
