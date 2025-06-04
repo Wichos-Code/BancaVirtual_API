@@ -1,5 +1,4 @@
 import Account from "./account.model.js";
-import User from "../user/user.model.js";
 
 const generateRandomAccountNumber = () => {
     return Math.floor(1000000000 + Math.random() * 9000000000);
@@ -16,9 +15,12 @@ export const createAccount = async (req, res) => {
         let exist = true;
 
         while (exist) {
+            //Por medio de la funcion anterior generamos un numero de cuenta aleatorio
             newAccountNumber = generateRandomAccountNumber();
+            //Verificamos si el numero de cuenta existe en la base de datos
             const existingAccount = await Account.findOne({ noAccount: newAccountNumber });
 
+            //Si el numero de cuenta no existe en la db salimos del bucle.
             if (!existingAccount) {
                 exist = false;
             }
@@ -172,11 +174,13 @@ export const deposit = async (req, res) => {
     const userId = req.usuario.id;
     const { fromAccount, toAccount, amount } = req.body;
 
+    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
     if (!fromAccount || !toAccount || !amount || amount <= 0) {
         return res.status(400).json({ error: "Datos inválidos para el depósito" });
     }
 
     try {
+        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
         const originAccount = await Account.findOne({
             noAccount: fromAccount,
             user: userId,

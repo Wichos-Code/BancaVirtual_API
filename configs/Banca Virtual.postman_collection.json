@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTExMzEsImV4cCI6MTc0OTAxNDczMX0.tyrROxw0fMOnZD7HsAK_ZVWN-RZF7xDPFzkm15urwa0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
 									"type": "string"
 								}
 							]
@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Savings\"\r\n}",
+							"raw": "{\r\n    \"currency\": \"USD\",\r\n    \"type\": \"Savings\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,7 +58,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTA2OTYsImV4cCI6MTc0OTAxNDI5Nn0.Kx3blMmVMlR1ag-g4R1K8cOus_PYguQbVxJuqdpXizM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
 									"type": "string"
 								}
 							]
@@ -184,6 +184,88 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTkwNDgsImV4cCI6MTc0OTAyMjY0OH0.i8b1uOhBK4tSmgN2_GyuXwzTPWSstXNcbxA2OHxhC3o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromAccount\": \"3837018551\",\r\n    \"toAccount\": \"1259245998\",\r\n    \"amount\": \"800\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createDeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createDeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By no Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"noAccount\": \"1594900144\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getByMyNoAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getByMyNoAccount"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -267,6 +349,37 @@
 			"response": []
 		},
 		{
+			"name": "Login Cliente 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dpi\":3032993120109,\r\n    \"password\": \"Josu12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Registe user",
 			"request": {
 				"auth": {
@@ -308,6 +421,47 @@
 			"response": []
 		},
 		{
+			"name": "Register user 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMjAxMTUsImV4cCI6MTc0OTAyMzcxNX0.aLw16h5hGp6tSjOZ0qfle1PyqQNUuwP_q9RRziczGkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"David\",\r\n    \"surname\": \"Mendez\",\r\n    \"username\": \"dmendez\",\r\n    \"password\": \"Josu12345\",\r\n    \"dpi\": 3032993120109,\r\n    \"email\": \"dmendez-2023324@kinal.edu.gt\",\r\n    \"phone\": \"85475965\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Verify Email",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -318,7 +472,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMDYxMTcsImV4cCI6MTc0OTAwOTcxN30.lAvFSmHZt4z6C1--LUWThQyjTC-q-PobD_s1PtDaCc8",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMjAxMTUsImV4cCI6MTc0OTAyMzcxNX0.aLw16h5hGp6tSjOZ0qfle1PyqQNUuwP_q9RRziczGkQ",
 							"type": "string"
 						}
 					]
@@ -335,7 +489,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/436591",
+					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/155286",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -346,7 +500,7 @@
 						"v1",
 						"auth",
 						"verify",
-						"436591"
+						"155286"
 					]
 				}
 			},
