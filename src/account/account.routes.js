@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit } from "./account.controller.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit, convertData } from "./account.controller.js"
 import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator } from "../middlewares/account-validator.js"
 
 const router = Router()
@@ -516,6 +516,8 @@ router.post("/createDeposit", depositAccountValidator, deposit)
  */
 
 router.post("/removeDeposit", depositAccountValidator, removeDeposit)
+
+router.post('/convertData', convertData)
 
 
 export default router

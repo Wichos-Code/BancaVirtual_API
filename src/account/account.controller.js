@@ -1,5 +1,6 @@
 import Account from "./account.model.js";
 import Transaction from "../transaction/transaction.model.js";
+import axios from "axios";
 
 const generateRandomAccountNumber = () => {
     return Math.floor(1000000000 + Math.random() * 9000000000);
@@ -63,34 +64,76 @@ export const getMyAccount = async (req, res) => {
     }
 }
 
+
 export const getMyNoAccount = async (req, res) => {
     try {
         const userId = req.usuario.id;
         const { noAccount } = req.body;
 
-        //Funcionalidad para ver la cuenta del usuario registrado por número de cuenta
+   
         const originAccount = await Account.findOne({
             noAccount: noAccount,
             user: userId,
             status: true
-        });
+        }).populate('user', 'name email uid');
 
         if (!originAccount) {
             return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
         }
 
+        
+        const targetCurrencies = ["USD", "EUR", "GTQ", "MXN", "COP", "ARS", "JPY", "GBP"];
+        const originCurrency = originAccount.currency;
+        const originalAmount = originAccount.amount;
+
+        const EXCHANGE_API_URL = process.env.EXCHANGE_API_URL;
+        const EXCHANGE_API_KEY = process.env.EXCHANGE_API_KEY;
+
+
+        const conversionPromises = targetCurrencies.map(async (target) => {
+            if (target === originCurrency) {
+                return { [target]: originalAmount };
+            }
+            const url = `${EXCHANGE_API_URL}/${EXCHANGE_API_KEY}/pair/${originCurrency}/${target}/${originalAmount}`;
+            try {
+                const response = await axios.get(url);
+                if (response.data?.result === 'success') {
+                    return { [target]: response.data.conversion_result };
+                } else {
+                    return { [target]: null }; 
+                }
+            } catch (error) {
+                console.error(`Error al convertir a ${target}:`, error.message);
+                return { [target]: null };
+            }
+        });
+
+     
+        const conversionResults = await Promise.all(conversionPromises);
+
+        
+        const convertedAmounts = conversionResults.reduce((acc, curr) => {
+            return { ...acc, ...curr };
+        }, {});
+
         res.status(200).json({
             success: true,
-            originAccount,
+            account: {
+                ...originAccount.toObject(),
+                amount: convertedAmounts,
+            },
         });
+
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             success: false,
             message: "Error al obtener las cuentas",
             error: error.message,
         });
     }
-}
+};
+
 
 export const getAccountById = async (req, res) => {
     try {
@@ -388,4 +431,38 @@ export const removeDeposit = async (req, res) => {
         });
     }
 };
+
+export const convertData = async (req, res) => {
+    const path = process.env.EXCHANGE_API_URL
+    const key = process.env.EXCHANGE_API_KEY
+
+    try{
+        const { from, to, amount } = req.body   
+        console.log (req.body)
+        const url = `${path}/${key}/pair/${from}/${to}/${amount}`
+
+        const response = await axios.get(url)
+
+        if(response.data && response.data.result === 'success'){
+            res.status(200).json({
+                base: from,
+                target: to,
+                conversionRate: response.data.conversion_rate,
+                conversionAmount: response.data.conversion_result
+            })
+        }else{
+            res.status(400).json({
+                msg: 'Error al convertir las divisas',
+                details: response.data
+            })
+        }
+
+    }catch(e){
+        console.log(e)
+        return res.status(500).json({
+            msg: 'Se produjo un error al realizar la conversión',
+            e
+        })
+    }
+}
 

@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjM4ODQsImV4cCI6MTc0OTA2NzQ4NH0.dzuKWjSNezDl1pW0sGPBBWf4ozcvfLCDxVBi-kkPA_g",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjk5OTEsImV4cCI6MTc0OTA3MzU5MX0.QcgRw0-KrOYm57ebs3zQ3s9om5nEffBVLmdOdlpqJF0",
 									"type": "string"
 								}
 							]
@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currency\": \"USD\",\r\n    \"type\": \"Monetary\"\r\n}",
+							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Monetary\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,19 +52,31 @@
 				},
 				{
 					"name": "Get My Accounts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjM4ODQsImV4cCI6MTc0OTA2NzQ4NH0.dzuKWjSNezDl1pW0sGPBBWf4ozcvfLCDxVBi-kkPA_g",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjY4OTUsImV4cCI6MTc0OTA3MDQ5NX0.2lxWOYviYWvW2IFdLuGiZtnZH285qqEVSRfM9rHe3dU",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:3000/virtualBank/v1/account/getMyAccounts",
 							"protocol": "http",
@@ -85,6 +97,16 @@
 				{
 					"name": "Get Accounts",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -118,7 +140,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTMwMzcsImV4cCI6MTc0OTAxNjYzN30.z8FK8PwZhnmAGYSWqx4U9MjAcebkyYgHJkcNtvgEFco",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
 									"type": "string"
 								}
 							]
@@ -126,7 +148,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/account/getAccountsById/683fbbc67ffc62265d15e006",
+							"raw": "http://localhost:3000/virtualBank/v1/account/getAccountsById/684098dd01408f4e6eed020c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -137,7 +159,7 @@
 								"v1",
 								"account",
 								"getAccountsById",
-								"683fbbc67ffc62265d15e006"
+								"684098dd01408f4e6eed020c"
 							]
 						}
 					},
@@ -151,7 +173,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTEwOTQsImV4cCI6MTc0OTAxNDY5NH0.3ILCqCqb4IMhSWK1bSU4CJlBkRW4w5HJSi4NXFpr59U",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
 									"type": "string"
 								}
 							]
@@ -168,7 +190,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/account/deleteAccount/683fbbc67ffc62265d15e006",
+							"raw": "http://localhost:3000/virtualBank/v1/account/deleteAccount/684098dd01408f4e6eed020c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -179,7 +201,7 @@
 								"v1",
 								"account",
 								"deleteAccount",
-								"683fbbc67ffc62265d15e006"
+								"684098dd01408f4e6eed020c"
 							]
 						}
 					},
@@ -275,7 +297,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjY4OTUsImV4cCI6MTc0OTA3MDQ5NX0.2lxWOYviYWvW2IFdLuGiZtnZH285qqEVSRfM9rHe3dU",
 									"type": "string"
 								}
 							]
@@ -284,7 +306,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"fromAccount\": \"5658860231\",\r\n    \"amount\": \"1000\"\r\n}",
+							"raw": "{   \r\n    \"fromAccount\": \"7182013851\",\r\n    \"amount\": \"1000\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -316,7 +338,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjgxODksImV4cCI6MTc0OTA3MTc4OX0.wC3QM5Tk11ptN2A2pg_In7hZ9dUjLobuMaV9Ef6GVnI",
 									"type": "string"
 								}
 							]
@@ -325,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"noAccount\": \"1594900144\"\r\n\r\n}",
+							"raw": "{\r\n  \"noAccount\": \"9687101352\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -357,7 +379,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjgxODksImV4cCI6MTc0OTA3MTc4OX0.wC3QM5Tk11ptN2A2pg_In7hZ9dUjLobuMaV9Ef6GVnI",
 									"type": "string"
 								}
 							]
@@ -366,7 +388,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNo\": \"5658860231\"\r\n}",
+							"raw": "{\r\n    \"accountNo\": \"7182013851\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -385,6 +407,37 @@
 								"v1",
 								"account",
 								"getDepositHistory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Conversor divisas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"USD\",\r\n    \"to\": \"GTQ\",\r\n    \"amount\": \"100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/convertData",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"convertData"
 							]
 						}
 					},
