@@ -3,7 +3,8 @@ import User from "../user/user.model.js"
 
 export const validateJWT = async (req, res, next) =>{
     try{
-        let token = req.body.token || req.query.token || req.headers["authorization"]
+        
+        let token = req.body?.token || req.query?.token || req.headers["authorization"];
 
         if(!token){
             return res.status(401).json({
@@ -34,6 +35,7 @@ export const validateJWT = async (req, res, next) =>{
         req.usuario = user
         next()
     }catch(err){
+        console.error("Error en validateJWT:", err);
         return res.status(500).json({
             success: false,
             message: "Error al validar el token",

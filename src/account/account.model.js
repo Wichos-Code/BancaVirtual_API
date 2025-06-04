@@ -8,7 +8,7 @@ const accountSchema = new Schema({
   currency: {
     type: String,
     required: true,
-    enum: ["USD", "EUR", "GTQ", "MXN", "COP", "ARS", "JPY", "GBP"], 
+    enum: ["USD", "EUR", "GTQ", "MXN", "COP", "ARS", "JPY", "GBP"],
   },
   amount: {
     type: Number,
@@ -22,7 +22,7 @@ const accountSchema = new Schema({
   },
   status: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   user: {
     type: Schema.Types.ObjectId,
@@ -31,7 +31,7 @@ const accountSchema = new Schema({
   },
 }, {
   versionKey: false,
-  timestamps: true 
+  timestamps: true
 });
 
 export default model("Account", accountSchema);

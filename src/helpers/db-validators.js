@@ -15,9 +15,9 @@ export const usernameExist = async(username = '') =>{
     }
 }
 
-export const accountExist = async(noAccount = '') => {
-    const existe = await Account.findOne({noAccount})
-    if (existe) {
-        throw new Error(`La cuenta ${noAccount} ya fue registrado previamente`)
+export const accountExists = async (id = " ") => {
+    const existe = await Account.findById(id)
+    if (!existe) {
+        throw new Error("No existe la Cuenta con el ID proporcionado")
     }
 }
