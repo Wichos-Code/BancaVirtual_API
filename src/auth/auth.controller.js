@@ -21,6 +21,7 @@ const createAdminUser = async () => {
                 income:100,
                 phone:"23145210",
                 password: hashedPassword,
+                workName: "Banco BF",
                 role: "ADMIN_ROLE", 
                 status: true,
             });

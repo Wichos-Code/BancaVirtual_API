@@ -49,8 +49,6 @@ export const updateUserAValidator = [
     validateJWT,
     hasRoles("ADMIN_ROLE"),
     param("dpi", "No es un DPI válido").optional().isNumeric(),
-    body("email").custom(emailExist),
-    body("username").custom(usernameExist),
     validateFields,
     handleErrors
 ]
@@ -66,6 +64,19 @@ export const deleteUserAValidator = [
 export const getUserValidator = [
     validateJWT,
     hasRoles("ADMIN_ROLE"),
+    validateFields,
+    handleErrors
+]
+
+export const getProfileInfoValidator = [
+    validateJWT,
+    validateFields,
+    handleErrors
+]
+
+export const updateUserValidator = [
+    validateJWT,
+    hasRoles("CLIENT_ROLE"),
     validateFields,
     handleErrors
 ]

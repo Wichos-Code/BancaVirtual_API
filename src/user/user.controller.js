@@ -107,3 +107,101 @@ export const deleteUserA = async(req,res) => {
         })
     }
 }
+
+// FUNCIONES PARA USUARIOS
+
+export const getProfileInfo = async (req, res) => {
+    const usuario = req.usuario;
+    try {
+        const user = await User.findById(usuario._id).select("-password -verificationToken -verificationTokenExpiresAt -uid -status -role");
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "Usuario no encontrado",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Perfil obtenido correctamente",
+            user,
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al obtener el perfil",
+            error: err.message,
+        });
+    }
+};
+
+export const updateUser = async (req, res) => {
+    const usuario = req.usuario
+    const data = req.body
+    try {
+        const user = await User.findById(usuario._id)
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "Usuario no encontrado",
+            });
+        }
+        if(data.username) {
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el username"
+            })
+        }
+        if(data.password){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar tu contraseña"
+            })
+        }
+        if(data.dpi){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el No. de DPI"
+            })
+        }
+        if(data.email){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el correo"
+            })
+        }
+        if(data.phone){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el No. de telefono"
+            })
+        }
+        if(data.role){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el role"
+            })
+        }
+        if(data.status){
+            return res.status(402).json({
+                success: false,
+                message: "No puedes editar el status"
+            })
+        }
+
+        const userUpdate = await User.findByIdAndUpdate(user._id, data, {new:true})
+        .select("-password -verificationToken -verificationTokenExpiresAt -uid -status -role")
+
+        return res.status(200).json({
+            message: "Datos actualizados con exito",
+            userUpdate
+        })
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error al actualizar perfil",
+            error: err.message
+        })
+    }
+}

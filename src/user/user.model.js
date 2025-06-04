@@ -45,6 +45,10 @@ const userSchema = Schema({
         minLength: 8,
         maxLength: 8
     },
+    workName:{
+        type: String,
+        required: true
+    },
     role:{
         type: String,
         required: true,

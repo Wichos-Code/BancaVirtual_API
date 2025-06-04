@@ -7,6 +7,314 @@
 	},
 	"item": [
 		{
+			"name": "User_Admin",
+			"item": [
+				{
+					"name": "List Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Josue\",\r\n    \"surname\": \"Cruz\",\r\n    \"username\": \"jcruz\",\r\n    \"email\": \"jcruz@gmail.com\",\r\n    \"direction\": \"9 calle zona 11\",\r\n    \"income\": 3500,\r\n    \"phone\": \"22335599\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/update/:dpi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"update",
+								":dpi"
+							],
+							"variable": [
+								{
+									"key": "dpi",
+									"value": "2309765401023"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/delete/:dpi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"delete",
+								":dpi"
+							],
+							"variable": [
+								{
+									"key": "dpi",
+									"value": "2309765401023"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/search/:dpi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"search",
+								":dpi"
+							],
+							"variable": [
+								{
+									"key": "dpi",
+									"value": "2987654323435"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Ver perfil",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmN2I4YzJlYTY3Y2QwYTRlYWIzYWUiLCJpYXQiOjE3NDkwNjgwOTcsImV4cCI6MTc0OTA3MTY5N30.ziF-RNrXSWzriq1TZU-vlPTFj0ECYAxkaKq0-oBCDXk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar perfil",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmN2I4YzJlYTY3Y2QwYTRlYWIzYWUiLCJpYXQiOjE3NDkwNjgwOTcsImV4cCI6MTc0OTA3MTY5N30.ziF-RNrXSWzriq1TZU-vlPTFj0ECYAxkaKq0-oBCDXk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Javier\",\r\n    \"surname\": \"Apen Solis\",\r\n    \"directiom\": \"22 calle zona 84\",\r\n    \"workName\": \"Cuadra\",\r\n    \"income\":1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/user/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Login",
 			"request": {
 				"auth": {
@@ -30,7 +338,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dpi\":2154630128745,\r\n    \"password\": \"admin\"\r\n}",
+					"raw": "{\r\n    \"username\": \"japen\",\r\n    \"password\": \"Contra1234$\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -57,8 +365,41 @@
 		{
 			"name": "Registe user",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTY5NTMsImV4cCI6MTc0OTAyMDU1M30.qNibsGEuCfqvUdo54tq7VU8Zk8_zNYAS5TYGfGhBPJQ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
-				"header": []
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Javier\",\r\n    \"surname\": \"Solis\",\r\n    \"username\": \"javier2\",\r\n    \"password\": \"Contra1234$\",\r\n    \"dpi\": 2309765401023,\r\n    \"direction\": \"90 calle zona 1 22\",\r\n    \"email\": \"javier@gmail.com\",\r\n    \"income\": 3000,\r\n    \"phone\": \"12425465\",\r\n    \"workName\": \"Pollo Rey\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
 			},
 			"response": []
 		},
@@ -84,7 +425,7 @@
 					"variable": [
 						{
 							"key": "code",
-							"value": "896791"
+							"value": "642660"
 						}
 					]
 				}
