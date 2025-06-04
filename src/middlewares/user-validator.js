@@ -36,3 +36,11 @@ export const loginValidator = [
     validateFields,
     handleErrors
 ];
+
+
+export const getUsersValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE"),
+    validateFields,
+    handleErrors
+]
