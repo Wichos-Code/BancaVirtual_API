@@ -1,11 +1,192 @@
 {
 	"info": {
-		"_postman_id": "46178aec-39ca-467e-9cf8-db470a6c0278",
+		"_postman_id": "e9dc967a-484e-4611-a46f-48254d4a6415",
 		"name": "Banca Virtual",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37585551"
+		"_exporter_id": "37585552"
 	},
 	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Add Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTExMzEsImV4cCI6MTc0OTAxNDczMX0.tyrROxw0fMOnZD7HsAK_ZVWN-RZF7xDPFzkm15urwa0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Savings\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Accounts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMTA2OTYsImV4cCI6MTc0OTAxNDI5Nn0.Kx3blMmVMlR1ag-g4R1K8cOus_PYguQbVxJuqdpXizM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getMyAccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getMyAccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTY3ODIsImV4cCI6MTc0OTAyMDM4Mn0.3nPjhmhNOaVsw8uMJy0Wy08LRBoq70O0ASjqTEKKrZ4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getAllAccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getAllAccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTMwMzcsImV4cCI6MTc0OTAxNjYzN30.z8FK8PwZhnmAGYSWqx4U9MjAcebkyYgHJkcNtvgEFco",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getAccountsById/683fbbc67ffc62265d15e006",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getAccountsById",
+								"683fbbc67ffc62265d15e006"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTEwOTQsImV4cCI6MTc0OTAxNDY5NH0.3ILCqCqb4IMhSWK1bSU4CJlBkRW4w5HJSi4NXFpr59U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/deleteAccount/683fbbc67ffc62265d15e006",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"deleteAccount",
+								"683fbbc67ffc62265d15e006"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Login",
 			"request": {
@@ -55,20 +236,106 @@
 			"response": []
 		},
 		{
-			"name": "Registe user",
+			"name": "Login Cliente",
 			"request": {
 				"method": "POST",
-				"header": []
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dpi\":3032993120108,\r\n    \"password\": \"Josu12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registe user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMDU3NzIsImV4cCI6MTc0OTAwOTM3Mn0.Tja63iLhOjrMQyxV9G5Gsg_WtqK8y-lfk5tJadXNQK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Josue\",\r\n    \"surname\": \"Garcia\",\r\n    \"username\": \"jgarcia\",\r\n    \"password\": \"Josu12345\",\r\n    \"dpi\": 3032993120108,\r\n    \"email\": \"jgarcia-2023324@kinal.edu.gt\",\r\n    \"phone\": \"85475965\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Verify Email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMDYxMTcsImV4cCI6MTc0OTAwOTcxN30.lAvFSmHZt4z6C1--LUWThQyjTC-q-PobD_s1PtDaCc8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/:code",
+					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/436591",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -79,13 +346,7 @@
 						"v1",
 						"auth",
 						"verify",
-						":code"
-					],
-					"variable": [
-						{
-							"key": "code",
-							"value": "896791"
-						}
+						"436591"
 					]
 				}
 			},
