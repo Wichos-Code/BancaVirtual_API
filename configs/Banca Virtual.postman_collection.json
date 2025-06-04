@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjM4ODQsImV4cCI6MTc0OTA2NzQ4NH0.dzuKWjSNezDl1pW0sGPBBWf4ozcvfLCDxVBi-kkPA_g",
 									"type": "string"
 								}
 							]
@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currency\": \"USD\",\r\n    \"type\": \"Savings\"\r\n}",
+							"raw": "{\r\n    \"currency\": \"USD\",\r\n    \"type\": \"Monetary\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,7 +58,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmZWRkYzU3NGE2NTYxMWE5ZjM5ODciLCJpYXQiOjE3NDkwMjAyODIsImV4cCI6MTc0OTAyMzg4Mn0.LkDf0jr2Jur01R7YWmXszv6JZxt88DbFStEMy0T11S4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjM4ODQsImV4cCI6MTc0OTA2NzQ4NH0.dzuKWjSNezDl1pW0sGPBBWf4ozcvfLCDxVBi-kkPA_g",
 									"type": "string"
 								}
 							]
@@ -186,14 +186,14 @@
 					"response": []
 				},
 				{
-					"name": "Add deposit",
+					"name": "Add Transaction",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
 									"type": "string"
 								}
 							]
@@ -202,7 +202,48 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fromAccount\": \"3837018551\",\r\n    \"toAccount\": \"1259245998\",\r\n    \"amount\": \"400\"\r\n}",
+							"raw": "{\r\n    \"fromAccount\": \"5658860231\",\r\n    \"toAccount\": \"7182013851\",\r\n    \"amount\": \"500\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createTransaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createTransaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjUwODIsImV4cCI6MTc0OTA2ODY4Mn0.hPaCUpK8Cnt9uZFRFwe0CjPfIrWB00DV-5yKeq5SElI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromAccount\": \"7182013851\",\r\n    \"amount\": \"1500\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -221,6 +262,47 @@
 								"v1",
 								"account",
 								"createDeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"fromAccount\": \"5658860231\",\r\n    \"amount\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/removeDeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"removeDeposit"
 							]
 						}
 					},
@@ -275,7 +357,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjZjN2ViY2UwZTBjZmRmMTI4ZTEiLCJpYXQiOjE3NDkwMjM0MTYsImV4cCI6MTc0OTAyNzAxNn0.1t5qqIxF7K4kp9sn__Fx-a0K5pRCt6yRJ10FG3Hwn6Y",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
 									"type": "string"
 								}
 							]
@@ -284,7 +366,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNo\": \"3837018551\"\r\n}",
+							"raw": "{\r\n    \"accountNo\": \"5658860231\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -428,7 +510,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMDU3NzIsImV4cCI6MTc0OTAwOTM3Mn0.Tja63iLhOjrMQyxV9G5Gsg_WtqK8y-lfk5tJadXNQK0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
 							"type": "string"
 						}
 					]
@@ -469,7 +551,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMjAxMTUsImV4cCI6MTc0OTAyMzcxNX0.aLw16h5hGp6tSjOZ0qfle1PyqQNUuwP_q9RRziczGkQ",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
 							"type": "string"
 						}
 					]
@@ -513,7 +595,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMjAxMTUsImV4cCI6MTc0OTAyMzcxNX0.aLw16h5hGp6tSjOZ0qfle1PyqQNUuwP_q9RRziczGkQ",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
 							"type": "string"
 						}
 					]
@@ -530,7 +612,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/155286",
+					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/915701",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -541,7 +623,7 @@
 						"v1",
 						"auth",
 						"verify",
-						"155286"
+						"915701"
 					]
 				}
 			},

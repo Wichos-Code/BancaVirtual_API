@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions } from "./account.controller.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit } from "./account.controller.js"
 import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator } from "../middlewares/account-validator.js"
 
 const router = Router()
@@ -245,9 +245,9 @@ router.delete("/deleteAccount/:id", deleteAccountValidator, deleteAccount)
 
 /**
  * @swagger
- * /createDeposit:
+ * /createTransaction:
  *   post:
- *     summary: Make a deposit/transfer between accounts
+ *     summary: Realiza una transferencia entre dos cuentas activas con la misma moneda
  *     tags: [Account]
  *     security:
  *       - bearerAuth: []
@@ -257,33 +257,57 @@ router.delete("/deleteAccount/:id", deleteAccountValidator, deleteAccount)
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - fromAccount
+ *               - toAccount
+ *               - amount
  *             properties:
  *               fromAccount:
  *                 type: number
- *                 description: Origin account number
+ *                 description: Número de cuenta origen
  *                 example: 1234567890
  *               toAccount:
  *                 type: number
- *                 description: Destination account number
+ *                 description: Número de cuenta destino
  *                 example: 9876543210
  *               amount:
  *                 type: number
- *                 description: Amount to deposit/transfer
- *                 example: 100
+ *                 description: Monto a transferir
+ *                 example: 100.00
  *     responses:
  *       201:
- *         description: Deposit completed successfully
+ *         description: Transferencia realizada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Transacción realizada exitosamente
+ *                 from:
+ *                   type: number
+ *                   example: 1234567890
+ *                 to:
+ *                   type: number
+ *                   example: 9876543210
+ *                 amount:
+ *                   type: number
+ *                   example: 100
  *       400:
- *         description: Invalid data or insufficient funds
+ *         description: Datos inválidos, fondos insuficientes o cuentas incompatibles
  *       401:
- *         description: Unauthorized
+ *         description: No autorizado
  *       404:
- *         description: Account not found
+ *         description: Cuenta de origen o destino no encontrada o inactiva
  *       500:
- *         description: Internal server error
+ *         description: Error interno del servidor
  */
 
-router.post("/createDeposit", depositAccountValidator, deposit)
+router.post("/createTransaction", depositAccountValidator, transaction)
 
 /**
  * @swagger
@@ -381,5 +405,117 @@ router.post("/getByMyNoAccount", getMyAccountsValidator, getMyNoAccount)
 
 
 router.post("/getDepositHistory", getMyAccountsValidator, getAccountTransactions)
+
+/**
+ * @swagger
+ * /createDeposit:
+ *   post:
+ *     summary: Realiza un depósito a una de tus cuentas
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fromAccount:
+ *                 type: number
+ *                 description: Número de cuenta donde se realizará el depósito
+ *                 example: 1234567890
+ *               amount:
+ *                 type: number
+ *                 description: Monto a depositar
+ *                 example: 150.00
+ *     responses:
+ *       201:
+ *         description: Depósito realizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Depósito realizado exitosamente
+ *                 from:
+ *                   type: number
+ *                   example: 1234567890
+ *                 amount:
+ *                   type: number
+ *                   example: 150
+ *       400:
+ *         description: Datos inválidos para el depósito
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Cuenta no encontrada o inactiva
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+
+router.post("/createDeposit", depositAccountValidator, deposit)
+
+/**
+ * @swagger
+ * /removeDeposit:
+ *   post:
+ *     summary: Realiza un retiro desde una de tus cuentas
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fromAccount:
+ *                 type: number
+ *                 description: Número de cuenta desde donde se retirará dinero
+ *                 example: 1234567890
+ *               amount:
+ *                 type: number
+ *                 description: Monto a retirar
+ *                 example: 50.00
+ *     responses:
+ *       201:
+ *         description: Retiro realizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Se retiró dinero de tu cuenta exitosamente
+ *                 from:
+ *                   type: number
+ *                   example: 1234567890
+ *                 amount:
+ *                   type: number
+ *                   example: 50
+ *       400:
+ *         description: Fondos insuficientes o datos inválidos
+ *       401:
+ *         description: No autorizado
+ *       404:
+ *         description: Cuenta no encontrada o inactiva
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+router.post("/removeDeposit", depositAccountValidator, removeDeposit)
+
 
 export default router

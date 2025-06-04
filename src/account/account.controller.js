@@ -171,7 +171,7 @@ export const deleteAccount = async (req, res) => {
     }
 }
 
-export const deposit = async (req, res) => {
+export const transaction = async (req, res) => {
     const userId = req.usuario.id;
     const { fromAccount, toAccount, amount } = req.body;
 
@@ -181,6 +181,11 @@ export const deposit = async (req, res) => {
     }
 
     try {
+        //Con esto evitamos que una persona transfiera dinero a su misma cuenta.
+        if (fromAccount === toAccount) {
+            return res.status(400).json({ error: "No puedes transferir dinero a la misma cuenta" });
+        }
+
         // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
         const originAccount = await Account.findOne({
             noAccount: fromAccount,
@@ -222,14 +227,14 @@ export const deposit = async (req, res) => {
             fromAccount: originAccount.noAccount,
             toAccount: targetAccount.noAccount,
             amount,
-            type: "DEPOSIT",
+            type: "TRANSFER",
             currency: originAccount.currency,
             user: originAccount.user,
         });
 
         res.status(201).json({
             success: true,
-            message: "Depósito realizado exitosamente",
+            message: "Transaccion realizado exitosamente",
             from: originAccount.noAccount,
             to: targetAccount.noAccount,
             amount
@@ -237,7 +242,7 @@ export const deposit = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Error al hacer el depósito",
+            message: "Error al hacer el Transaccion",
             error: error.message,
         });
     }
@@ -272,6 +277,113 @@ export const getAccountTransactions = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error al obtener el historial",
+            error: error.message,
+        });
+    }
+};
+
+export const deposit = async (req, res) => {
+    const userId = req.usuario.id;
+    const { fromAccount, amount } = req.body;
+
+    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
+    if (!fromAccount || !amount || amount <= 0) {
+        return res.status(400).json({ error: "Datos inválidos para el depósito" });
+    }
+
+    try {
+        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
+        const originAccount = await Account.findOne({
+            noAccount: fromAccount,
+            user: userId,
+            status: true
+        });
+
+        if (!originAccount) {
+            return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
+        }
+
+        originAccount.amount += +amount;
+
+        await originAccount.save();
+
+        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
+        o retiros que realicen en las cuentas.
+        */
+        await Transaction.create({
+            fromAccount: originAccount.noAccount,
+            amount,
+            type: "DEPOSIT",
+            currency: originAccount.currency,
+            user: originAccount.user,
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Depósito realizado exitosamente",
+            from: originAccount.noAccount,
+            amount
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al hacer el depósito",
+            error: error.message,
+        });
+    }
+};
+
+export const removeDeposit = async (req, res) => {
+    const userId = req.usuario.id;
+    const { fromAccount, amount } = req.body;
+
+    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
+    const numericAmount = parseFloat(amount);
+    if (!fromAccount || isNaN(numericAmount) || numericAmount <= 0) {
+        return res.status(400).json({ error: "Debe proporcionar una cuenta válida y un monto mayor a cero" });
+    }
+    try {
+        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
+        const originAccount = await Account.findOne({
+            noAccount: fromAccount,
+            user: userId,
+            status: true
+        });
+
+        if (!originAccount) {
+            return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
+        }
+
+        if (originAccount.amount < numericAmount) {
+            return res.status(400).json({
+                error: `Fondos insuficientes. Saldo disponible: ${originAccount.amount}`,
+            });
+        }
+
+        originAccount.amount -= amount;
+        await originAccount.save();
+
+        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
+        o retiros que realicen en las cuentas.
+        */
+        await Transaction.create({
+            fromAccount: originAccount.noAccount,
+            amount,
+            type: "WITHDRAWAL",
+            currency: originAccount.currency,
+            user: originAccount.user,
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Se retiro dinero de tu cuenta exitosamente",
+            from: originAccount.noAccount,
+            amount
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al hacer el retiro",
             error: error.message,
         });
     }

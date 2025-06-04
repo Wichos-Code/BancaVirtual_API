@@ -7,7 +7,6 @@ const transactionSchema = new Schema({
     },
     toAccount: {
         type: Number,
-        required: true,
     },
     amount: {
         type: Number,
