@@ -62,3 +62,10 @@ export const deleteUserAValidator = [
     validateFields,
     handleErrors
 ]
+
+export const getUserValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE"),
+    validateFields,
+    handleErrors
+]

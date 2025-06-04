@@ -25,6 +25,30 @@ export const getUsers = async (req,res) => {
     }
 }
 
+export const getUser = async(req,res) => {
+    const { dpi } = req.params
+    try {
+        const user = await User.findOne({dpi: dpi})
+
+        if(!user){
+            return res.status(404).json({
+                message: "No se encontraron usuario"
+            })
+        }
+
+        return res.status(200).json({
+            message: "Usuario obtenido con exito",
+            user: user
+        })
+
+    } catch (err) {
+        return res.status(500).json({
+            message: "Error al encontrar usuario",
+            error: err.message
+        })
+    }
+}
+
 export const updateUserA = async(req, res) => {
     const { dpi } = req.params
     const data = req.body

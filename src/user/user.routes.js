@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getUsers, updateUserA, deleteUserA } from "./user.controller.js";
-import { getUsersValidator, updateUserAValidator, deleteUserAValidator } from "../middlewares/user-validator.js";
+import { getUsers, updateUserA, deleteUserA, getUser } from "./user.controller.js";
+import { getUsersValidator, updateUserAValidator, deleteUserAValidator, getUserValidator } from "../middlewares/user-validator.js";
 
 const router = Router()
 
@@ -21,6 +21,12 @@ router.delete(
     "/delete/:dpi",
     deleteUserAValidator,
     deleteUserA
+)
+
+router.get(
+    "/search/:dpi",
+    getUserValidator,
+    getUser
 )
 
 export default router
