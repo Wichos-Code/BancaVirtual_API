@@ -98,6 +98,7 @@ export const getMyNoAccount = async (req, res) => {
             try {
                 const response = await axios.get(url);
                 if (response.data?.result === 'success') {
+                    //Se retornan los resultados de las conversiones a los diversos tipos de moneda.
                     return { [target]: response.data.conversion_result };
                 } else {
                     return { [target]: null }; 

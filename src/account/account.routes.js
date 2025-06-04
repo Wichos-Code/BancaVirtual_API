@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit, convertData } from "./account.controller.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit } from "./account.controller.js"
 import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator } from "../middlewares/account-validator.js"
 
 const router = Router()
@@ -313,7 +313,7 @@ router.post("/createTransaction", depositAccountValidator, transaction)
  * @swagger
  * /getByMyNoAccount:
  *   post:
- *     summary: Get your own account by account number
+ *     summary: Get your own account by account number with currency conversion
  *     tags: [Account]
  *     security:
  *       - bearerAuth: []
@@ -330,11 +330,69 @@ router.post("/createTransaction", depositAccountValidator, transaction)
  *                 example: 1234567890
  *     responses:
  *       200:
- *         description: Account retrieved successfully
+ *         description: Account retrieved successfully with currency conversions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 account:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "684098ac01408f4e6eed0207"
+ *                     noAccount:
+ *                       type: number
+ *                       example: 7182013851
+ *                     currency:
+ *                       type: string
+ *                       example: "USD"
+ *                     amount:
+ *                       type: object
+ *                       description: Balance converted to multiple currencies
+ *                       example:
+ *                         USD: 12500
+ *                         GTQ: 97525
+ *                         EUR: 11500.32
+ *                         MXN: 213000
+ *                         COP: 48750000
+ *                         ARS: 11300000
+ *                         JPY: 1950000
+ *                         GBP: 9825
+ *                     type:
+ *                       type: string
+ *                       example: "Savings"
+ *                     status:
+ *                       type: boolean
+ *                       example: true
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                           example: "Josue"
+ *                         email:
+ *                           type: string
+ *                           example: "jgarcia-2023324@kinal.edu.gt"
+ *                         uid:
+ *                           type: string
+ *                           example: "6840982e01408f4e6eed01fe"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-06-04T19:04:12.244Z"
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-06-04T20:29:44.288Z"
  *       401:
- *         description: Unauthorized
+ *         description: Unauthorized – token inválido o no enviado
  *       404:
- *         description: Account not found
+ *         description: Account not found or inactive
  *       500:
  *         description: Internal server error
  */
@@ -517,7 +575,6 @@ router.post("/createDeposit", depositAccountValidator, deposit)
 
 router.post("/removeDeposit", depositAccountValidator, removeDeposit)
 
-router.post('/convertData', convertData)
 
 
 export default router
