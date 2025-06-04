@@ -59,6 +59,36 @@ export const getMyAccount = async (req, res) => {
         });
     }
 }
+
+export const getMyNoAccount = async (req, res) => {
+    try {
+        const userId = req.usuario.id;
+        const { noAccount } = req.body;
+
+        //Funcionalidad para ver la cuenta del usuario registrado por número de cuenta
+        const originAccount = await Account.findOne({
+            noAccount: noAccount,
+            user: userId,
+            status: true
+        });
+
+        if (!originAccount) {
+            return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
+        }
+
+        res.status(200).json({
+            success: true,
+            originAccount,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las cuentas",
+            error: error.message,
+        });
+    }
+}
+
 export const getAccountById = async (req, res) => {
     try {
         const { id } = req.params
@@ -137,3 +167,61 @@ export const deleteAccount = async (req, res) => {
         })
     }
 }
+
+export const deposit = async (req, res) => {
+    const userId = req.usuario.id;
+    const { fromAccount, toAccount, amount } = req.body;
+
+    if (!fromAccount || !toAccount || !amount || amount <= 0) {
+        return res.status(400).json({ error: "Datos inválidos para el depósito" });
+    }
+
+    try {
+        const originAccount = await Account.findOne({
+            noAccount: fromAccount,
+            user: userId,
+            status: true
+        });
+
+        if (!originAccount) {
+            return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
+        }
+
+        if (originAccount.amount < amount) {
+            return res.status(400).json({ error: "Fondos insuficientes en la cuenta de origen" });
+        }
+
+        const targetAccount = await Account.findOne({
+            noAccount: toAccount,
+            status: true
+        });
+
+        if (!targetAccount) {
+            return res.status(404).json({ error: "Cuenta de destino no encontrada o inactiva" });
+        }
+
+        if (originAccount.currency !== targetAccount.currency) {
+            return res.status(400).json({ error: "Las cuentas deben usar la misma moneda para el depósito" });
+        }
+
+        originAccount.amount -= amount;
+        targetAccount.amount += +amount;
+
+        await originAccount.save();
+        await targetAccount.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Depósito realizado exitosamente",
+            from: originAccount.noAccount,
+            to: targetAccount.noAccount,
+            amount
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al hacer el depósito",
+            error: error.message,
+        });
+    }
+};

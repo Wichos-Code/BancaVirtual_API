@@ -46,5 +46,14 @@ export const deleteAccountValidator = [
     handleErrors
 ]
 
+export const depositAccountValidator = [
+    validateJWT,
+    hasRoles("CLIENT_ROLE"),
+    validateFields,
+    handleErrors
+]
+
+
+
 
 
