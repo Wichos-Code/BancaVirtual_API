@@ -60,3 +60,26 @@ export const updateUserA = async(req, res) => {
         })
     }
 }
+
+export const deleteUserA = async(req,res) => {
+    const { dpi } = req.params
+    try {
+        const user = await User.findOne({dpi: dpi})
+        if(user.role === "ADMIN_ROLE") {
+            return res.status(402).json({
+                message: "No puedes editar un usuario administrador"
+            })
+        }
+
+        const userDelete = await User.findByIdAndUpdate(user._id, {status: false}, {new: true})
+
+        return res.status(200).json({
+            message: "Usuario eliminado con exito",
+            userDelete
+        })
+    } catch (err) {
+        return res.status(500).json({
+            message: "Error al eliminar usuario"
+        })
+    }
+}

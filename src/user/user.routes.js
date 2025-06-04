@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getUsers, updateUserA } from "./user.controller.js";
-import { getUsersValidator, updateUserAValidator } from "../middlewares/user-validator.js";
+import { getUsers, updateUserA, deleteUserA } from "./user.controller.js";
+import { getUsersValidator, updateUserAValidator, deleteUserAValidator } from "../middlewares/user-validator.js";
 
 const router = Router()
 
@@ -15,6 +15,12 @@ router.put(
     "/update/:dpi",
     updateUserAValidator,
     updateUserA
+)
+
+router.delete(
+    "/delete/:dpi",
+    deleteUserAValidator,
+    deleteUserA
 )
 
 export default router

@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { emailExist, usernameExist, validateIncome } from "../helpers/db-validators.js";
 import { validateFields } from "./validate-fields.js";
 import { handleErrors } from "./handle-errors.js";
@@ -48,8 +48,17 @@ export const getUsersValidator = [
 export const updateUserAValidator = [
     validateJWT,
     hasRoles("ADMIN_ROLE"),
+    param("dpi", "No es un DPI válido").optional().isNumeric(),
     body("email").custom(emailExist),
     body("username").custom(usernameExist),
+    validateFields,
+    handleErrors
+]
+
+export const deleteUserAValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE"),
+    param("dpi", "No es un DPI válido").optional().isNumeric(),
     validateFields,
     handleErrors
 ]
