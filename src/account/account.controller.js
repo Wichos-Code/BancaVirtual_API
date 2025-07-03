@@ -70,7 +70,7 @@ export const getMyNoAccount = async (req, res) => {
         const userId = req.usuario.id;
         const { noAccount } = req.body;
 
-   
+
         const originAccount = await Account.findOne({
             noAccount: noAccount,
             user: userId,
@@ -81,7 +81,7 @@ export const getMyNoAccount = async (req, res) => {
             return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
         }
 
-        
+
         const targetCurrencies = ["USD", "EUR", "GTQ", "MXN", "COP", "ARS", "JPY", "GBP"];
         const originCurrency = originAccount.currency;
         const originalAmount = originAccount.amount;
@@ -101,7 +101,7 @@ export const getMyNoAccount = async (req, res) => {
                     //Se retornan los resultados de las conversiones a los diversos tipos de moneda.
                     return { [target]: response.data.conversion_result };
                 } else {
-                    return { [target]: null }; 
+                    return { [target]: null };
                 }
             } catch (error) {
                 console.error(`Error al convertir a ${target}:`, error.message);
@@ -109,10 +109,10 @@ export const getMyNoAccount = async (req, res) => {
             }
         });
 
-     
+
         const conversionResults = await Promise.all(conversionPromises);
 
-        
+
         const convertedAmounts = conversionResults.reduce((acc, curr) => {
             return { ...acc, ...curr };
         }, {});
@@ -254,12 +254,20 @@ export const transaction = async (req, res) => {
             return res.status(404).json({ error: "Cuenta de destino no encontrada o inactiva" });
         }
 
-        if (originAccount.currency !== targetAccount.currency) {
-            return res.status(400).json({ error: "Las cuentas deben usar la misma moneda para el depósito" });
-        }
+        let convertedAmount = amount;
 
-        originAccount.amount -= amount;
-        targetAccount.amount += +amount;
+        if (originAccount.currency !== targetAccount.currency) {
+            try {
+                convertedAmount = convertCurrency(amount, originAccount.currency, targetAccount.currency);
+                originAccount.amount -= amount;
+                targetAccount.amount += convertedAmount;
+            } catch (err) {
+                return res.status(400).json({ error: err.message });
+            }
+        } else {
+            originAccount.amount -= amount;
+            targetAccount.amount += amount;
+        }
 
         await originAccount.save();
         await targetAccount.save();
@@ -274,6 +282,8 @@ export const transaction = async (req, res) => {
             type: "TRANSFER",
             currency: originAccount.currency,
             user: originAccount.user,
+            convertedTo: targetAccount.currency,
+            convertedAmount
         });
 
         res.status(201).json({
@@ -281,7 +291,8 @@ export const transaction = async (req, res) => {
             message: "Transaccion realizado exitosamente",
             from: originAccount.noAccount,
             to: targetAccount.noAccount,
-            amount
+            amount,
+            convertedAmount
         });
     } catch (error) {
         res.status(500).json({
@@ -437,33 +448,51 @@ export const convertData = async (req, res) => {
     const path = process.env.EXCHANGE_API_URL
     const key = process.env.EXCHANGE_API_KEY
 
-    try{
-        const { from, to, amount } = req.body   
-        console.log (req.body)
+    try {
+        const { from, to, amount } = req.body
+        console.log(req.body)
         const url = `${path}/${key}/pair/${from}/${to}/${amount}`
 
         const response = await axios.get(url)
 
-        if(response.data && response.data.result === 'success'){
+        if (response.data && response.data.result === 'success') {
             res.status(200).json({
                 base: from,
                 target: to,
                 conversionRate: response.data.conversion_rate,
                 conversionAmount: response.data.conversion_result
             })
-        }else{
+        } else {
             res.status(400).json({
                 msg: 'Error al convertir las divisas',
                 details: response.data
             })
         }
 
-    }catch(e){
+    } catch (e) {
         console.log(e)
         return res.status(500).json({
             msg: 'Se produjo un error al realizar la conversión',
             e
         })
     }
+}
+
+export const exchangeRates = {
+    USD: { GTQ: 7.75, EUR: 0.91, MXN: 18.2, COP: 3900, ARS: 910, JPY: 157.3, GBP: 0.78 },
+    GTQ: { USD: 0.13, EUR: 0.12, MXN: 2.35, COP: 502.5, ARS: 120.0, JPY: 20.3, GBP: 0.10 },
+    EUR: { USD: 1.1, GTQ: 8.4, MXN: 20.0, COP: 4300, ARS: 980, JPY: 171.5, GBP: 0.86 },
+    MXN: { USD: 0.055, EUR: 0.05, GTQ: 0.43, COP: 215, ARS: 49, JPY: 8.6, GBP: 0.043 },
+    COP: { USD: 0.00026, EUR: 0.00023, GTQ: 0.00199, MXN: 0.0046, ARS: 0.23, JPY: 0.040, GBP: 0.00020 },
+    ARS: { USD: 0.0011, EUR: 0.0010, GTQ: 0.0083, MXN: 0.020, COP: 4.3, JPY: 0.18, GBP: 0.00089 },
+    JPY: { USD: 0.0064, EUR: 0.0058, GTQ: 0.049, MXN: 0.12, COP: 25.0, ARS: 5.5, GBP: 0.0050 },
+    GBP: { USD: 1.28, EUR: 1.17, GTQ: 10.0, MXN: 23.1, COP: 4800, ARS: 1120, JPY: 199 },
+};
+
+export function convertCurrency(amount, fromCurrency, toCurrency) {
+    if (fromCurrency === toCurrency) return amount;
+    const rate = exchangeRates[fromCurrency]?.[toCurrency];
+    if (!rate) throw new Error("No hay tasa de cambio para esta conversión");
+    return amount * rate;
 }
 
