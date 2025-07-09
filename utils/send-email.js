@@ -1,17 +1,21 @@
 import nodemailer from "nodemailer"
-import path, { dirname } from "path"
-import { fileURLToPath } from "url"
+import dotenv from "dotenv"
+import { getAccessToken } from "./gmailOAuth.js"
+ 
+dotenv.config()
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export const sendVerificationEmail = async (email, code) => {
+export async function sendVerificationEmail (email, code)  {
+  const accessToken = await getAccessToken();
   const transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
+      service: 'gmail',
+      auth: {
+          type: 'OAuth2',
+          user: process.env.GMAIL_USER,
+          clientId: process.env.GMAIL_CLIENT_ID,
+          clientSecret: process.env.GMAIL_CLIENT_SECRET,
+          refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+          accessToken: accessToken
+      }
   });
 
   const mailOptions = {
@@ -27,12 +31,12 @@ export const sendVerificationEmail = async (email, code) => {
         <style>
           body {
             font-family: Arial, sans-serif;
-            background-color: #141a2b;
+            background-color: #bcddff
             margin: 0;
             padding: 0;
           }
           .container {
-            background-color: #242d3c;
+            background-color: #ffffff;
             max-width: 600px;
             margin: 30px auto;
             border-radius: 8px;
@@ -40,8 +44,8 @@ export const sendVerificationEmail = async (email, code) => {
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
           }
           .header {
-            background-color: #141a2b;
-            color: #edb52c;
+            background-color: #bcddff;
+            color: #1e3169;
             text-align: center;
             padding: 20px;
           }
@@ -51,23 +55,17 @@ export const sendVerificationEmail = async (email, code) => {
           }
           .content {
             padding: 20px;
-            color: #ffffff;
+            color:rgb(0, 0, 0);
           }
           .content p {
-            color: #d1d9e6;
+            color:rgb(0, 0, 0);
           }
-          .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 20px;
-            background-color: #edb52c;
-            color: #141a2b;
-            text-decoration: none;
+          .content label {
             font-weight: bold;
-            border-radius: 5px;
+            color: #1e3169;
           }
           .footer {
-            background-color: #141a2b;
+            background-color: #bcddff;
             text-align: center;
             padding: 15px;
             font-size: 12px;
@@ -78,29 +76,31 @@ export const sendVerificationEmail = async (email, code) => {
       <body>
         <div class="container">
           <div class="header">
-            <img src="cid:byteforce logo" alt="ByteForce Logo" />
+            <img src="https://siemprehaciaadelanteguate.com/wp-content/uploads/2025/03/fundacion-kinal-logo.webp" alt="Kinal logo" />
             <h2>Verificación de Cuenta</h2>
           </div>
           <div class="content">
-            <p>Gracias por registrarte. Haz clic en el siguiente enlace para verificar tu cuenta:</p>
-            <a href="http://localhost:3000/api/verify/${code}" class="button">Verificar cuenta</a>
+            <p>Gracias por registrarte. Ingresa el siguiente código para verificar tu cuenta:</p>
+            <p class="Codigo style="font-weight: bold">Tu codigo de verificacion es:</p>
+            <center><label>${code}</label></center>
             <p style="margin-top: 20px;">Si no fuiste tú quien se registró, puedes ignorar este mensaje.</p>
           </div>
           <div class="footer">
-            © 2025 Byte Force. Todos los derechos reservados.
+            © 2025 ByteForce. Todos los derechos reservados.
           </div>
         </div>
       </body>
       </html>
     `,
-    attachments: [
-      {
-        filename: 'LogoBF.png',
-        path: path.join(__dirname, '../../public/uploads/email/LogoBF.png'),
-        cid: 'byteforce logo'
-      }
-    ]
-  };
 
-  await transporter.sendMail(mailOptions);
+  }
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Correo enviado correctamente:', info.response);
+    return email;
+  } catch (error) {
+    console.error('Error al enviar el correo:', error);
+    throw error;
+  }
+
 };

@@ -1,6 +1,6 @@
 import User from "../user/user.model.js"
 import { hash, verify } from "argon2"
-import { sendVerificationEmail } from "../middlewares/send-email.js"
+import { sendVerificationEmail } from "../../utils/send-email.js";
 import { generateJWT } from "../helpers/generate-jwt.js";
 
 const createAdminUser = async () => {
