@@ -1,5 +1,4 @@
 import Account from "./account.model.js";
-import Transaction from "../transaction/transaction.model.js";
 import axios from "axios";
 
 const generateRandomAccountNumber = () => {
@@ -495,4 +494,53 @@ export function convertCurrency(amount, fromCurrency, toCurrency) {
     if (!rate) throw new Error("No hay tasa de cambio para esta conversión");
     return amount * rate;
 }
+
+export const getFavorites = async (req, res) => {
+    try {
+        const userId = req.usuario.id;
+        const accounts = await Account.find({ user: userId, status: true }).select("favorites").populate("favorites")
+
+
+        res.status(200).json({
+            success: true,
+            favorites: accounts 
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las cuentas favoritas",
+            error: err.message
+        });
+    }
+};
+
+
+export const addFavoriteAccount = async (req, res) => {
+  try {
+    const { id }  = req.usuario;
+    const { myAccountNo, favoriteAccountId } = req.body;
+
+    const myAccount = await Account.findOne({
+      noAccount: myAccountNo,
+      user: id,
+      status: true,
+    });
+
+    myAccount.favorites = favoriteAccountId;
+    await myAccount.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Cuenta favorita agregada exitosamente",
+      favorites: myAccount.favorites,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error al agregar cuenta favorita",
+      error: err.message,
+    });
+  }
+};
+
 

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e9dc967a-484e-4611-a46f-48254d4a6415",
+		"_postman_id": "6a2ae80a-1783-4301-a0fe-42998ca8b278",
 		"name": "Banca Virtual",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37585552"
+		"_exporter_id": "37585399"
 	},
 	"item": [
 		{
@@ -440,6 +440,53 @@
 								"convertData"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFavorites",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODZmMDZkNDg2MmEwMDU4Y2ZkODg3ZjciLCJpYXQiOjE3NTIxMDY4ODUsImV4cCI6MTc1MjExMDQ4NX0.aU-KEFIzzIFtDBGjoDfULZmrV-LZaT4kP4Y1-zYt7Zo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Monetary\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getFavorites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getFavorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFavorite",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

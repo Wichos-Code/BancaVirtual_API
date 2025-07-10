@@ -53,7 +53,16 @@ export const depositAccountValidator = [
     handleErrors
 ]
 
+export const getFavoritesValidator = [
+    validateJWT,
+    validateFields,
+    handleErrors
+]
 
-
-
-
+export const addFavorite = [
+    validateJWT,
+    body(" myAccountNo").isMongoId().withMessage("No es un ID válido de MongoDB"),
+    body("favoriteAccountId").isMongoId().withMessage("No es un ID válido de MongoDB"),
+    validateFields,
+    handleErrors
+]

@@ -29,6 +29,12 @@ const accountSchema = new Schema({
     ref: "User",
     required: true,
   },
+  favorites:{
+    type:Schema.Types.ObjectId,
+    ref: "Account",
+    required: false
+    
+  },
 }, {
   versionKey: false,
   timestamps: true

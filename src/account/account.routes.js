@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit } from "./account.controller.js"
-import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator } from "../middlewares/account-validator.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit, getFavorites, addFavoriteAccount } from "./account.controller.js"
+import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator, getFavoritesValidator, addFavorite } from "../middlewares/account-validator.js"
 
 const router = Router()
 
@@ -575,6 +575,108 @@ router.post("/createDeposit", depositAccountValidator, deposit)
 
 router.post("/removeDeposit", depositAccountValidator, removeDeposit)
 
+/**
+ * @swagger
+ * /getFavorites:
+ *   get:
+ *     summary: Obtiene las cuentas favoritas del usuario
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de cuentas favoritas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 favorites:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: 66a0d263c7145c6b9a333e40
+ *                       favorites:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                               example: 66a0d19ac7145c6b9a333e3d
+ *                             noAccount:
+ *                               type: number
+ *                               example: 123456
+ *                             currency:
+ *                               type: string
+ *                               example: GTQ
+ *                             amount:
+ *                               type: number
+ *                               example: 1000
+ *                             type:
+ *                               type: string
+ *                               example: Monetary
+ *       401:
+ *         description: No autorizado
+ *       500:
+ *         description: Error interno del servidor
+ */
 
+router.get("/getFavorites", getFavoritesValidator, getFavorites)
+
+
+/**
+ * @swagger
+ * /addFavorite:
+ *   put:
+ *     summary: Agrega o actualiza la cuenta favorita de una cuenta del usuario
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               myAccountNo:
+ *                 type: number
+ *                 description: Número de cuenta del usuario que será actualizada
+ *                 example: 123456
+ *               favoriteAccountId:
+ *                 type: string
+ *                 description: ID de la cuenta favorita a asignar
+ *                 example: 66a0d19ac7145c6b9a333e3d
+ *     responses:
+ *       200:
+ *         description: Cuenta favorita agregada exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Cuenta favorita agregada exitosamente
+ *                 favorites:
+ *                   type: string
+ *                   example: 66a0d19ac7145c6b9a333e3d
+ *       401:
+ *         description: No autorizado
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+router.put("/addFavorite", addFavorite, addFavoriteAccount)
 
 export default router
