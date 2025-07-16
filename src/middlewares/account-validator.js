@@ -61,7 +61,7 @@ export const getFavoritesValidator = [
 
 export const addFavorite = [
     validateJWT,
-    body(" myAccountNo").isMongoId().withMessage("No es un ID válido de MongoDB"),
+    body("myAccountNo").isNumeric().withMessage("El número de cuenta debe ser numérico"),
     body("favoriteAccountId").isMongoId().withMessage("No es un ID válido de MongoDB"),
     validateFields,
     handleErrors

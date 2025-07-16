@@ -500,7 +500,6 @@ export const getFavorites = async (req, res) => {
         const userId = req.usuario.id;
         const accounts = await Account.find({ user: userId, status: true }).select("favorites").populate("favorites")
 
-
         res.status(200).json({
             success: true,
             favorites: accounts 
