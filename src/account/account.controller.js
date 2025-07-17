@@ -496,21 +496,23 @@ export function convertCurrency(amount, fromCurrency, toCurrency) {
 }
 
 export const getFavorites = async (req, res) => {
-    try {
-        const userId = req.usuario.id;
-        const accounts = await Account.find({ user: userId, status: true }).select("favorites").populate("favorites")
+  try {
+    const userId = req.usuario.id;
 
-        res.status(200).json({
-            success: true,
-            favorites: accounts 
-        });
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: "Error al obtener las cuentas favoritas",
-            error: err.message
-        });
-    }
+    const accounts = await Account.find({ user: userId, status: true }).populate("favorites");
+    const allFavorites = accounts.flatMap(acc => acc.favorites).filter(Boolean);
+
+    res.status(200).json({
+      success: true,
+      favorites: allFavorites,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener las cuentas favoritas",
+      error: err.message
+    });
+  }
 };
 
 
