@@ -6,8 +6,6 @@ import { validateJWT } from "./validate-jwt.js";
 import { hasRoles } from "./role-validator.js";
 
 export const registerValidator = [
-    validateJWT,
-    hasRoles("ADMIN_ROLE"),
     body("name", "El nombre es obligatorio").not().isEmpty(),
     body("surname", "El apellido es obligatorio").not().isEmpty(),
     body("username","El username es obligatorio").not().isEmpty(),

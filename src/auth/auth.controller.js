@@ -109,6 +109,12 @@ export const login = async (req, res) => {
                 error:"No existe el usuario o correo ingresado"
             })
         }
+        if(user.status === false){
+            return res.status(400).json({
+                message: "Usuario Deshabilitado",
+                error: "Usuario no verificado o desactivado"
+            })
+        }
 
         const validPassword = await verify(user.password, password)
 
