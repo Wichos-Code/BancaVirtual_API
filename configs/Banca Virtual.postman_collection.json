@@ -1,16 +1,57 @@
 {
 	"info": {
-		"_postman_id": "46178aec-39ca-467e-9cf8-db470a6c0278",
+		"_postman_id": "6a2ae80a-1783-4301-a0fe-42998ca8b278",
 		"name": "Banca Virtual",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37585551"
+		"_exporter_id": "37585399"
 	},
 	"item": [
 		{
-			"name": "User_Admin",
+			"name": "Account",
 			"item": [
 				{
-					"name": "List Users",
+					"name": "Add Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjk5OTEsImV4cCI6MTc0OTA3MzU5MX0.QcgRw0-KrOYm57ebs3zQ3s9om5nEffBVLmdOdlpqJF0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Monetary\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Accounts",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -20,7 +61,48 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjY4OTUsImV4cCI6MTc0OTA3MDQ5NX0.2lxWOYviYWvW2IFdLuGiZtnZH285qqEVSRfM9rHe3dU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getMyAccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getMyAccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Accounts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
 									"type": "string"
 								}
 							]
@@ -29,17 +111,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmYjU3NWViY2UwZTBjZmRmMTI4ZGEiLCJpYXQiOjE3NDkwMTY3ODIsImV4cCI6MTc0OTAyMDM4Mn0.3nPjhmhNOaVsw8uMJy0Wy08LRBoq70O0ASjqTEKKrZ4",
+								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/users",
+							"raw": "http://localhost:3000/virtualBank/v1/account/getAllAccounts",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -48,46 +125,30 @@
 							"path": [
 								"virtualBank",
 								"v1",
-								"user",
-								"users"
+								"account",
+								"getAllAccounts"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Actualizar usuario",
+					"name": "Get Account By Id",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
 									"type": "string"
 								}
 							]
 						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Josue\",\r\n    \"surname\": \"Cruz\",\r\n    \"username\": \"jcruz\",\r\n    \"email\": \"jcruz@gmail.com\",\r\n    \"direction\": \"9 calle zona 11\",\r\n    \"income\": 3500,\r\n    \"phone\": \"22335599\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/update/:dpi",
+							"raw": "http://localhost:3000/virtualBank/v1/account/getAccountsById/684098dd01408f4e6eed020c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,199 +157,32 @@
 							"path": [
 								"virtualBank",
 								"v1",
-								"user",
-								"update",
-								":dpi"
-							],
-							"variable": [
-								{
-									"key": "dpi",
-									"value": "2309765401023"
-								}
+								"account",
+								"getAccountsById",
+								"684098dd01408f4e6eed020c"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Eliminar Usuario",
+					"name": "deactivate account",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjY4MzAsImV4cCI6MTc0OTA3MDQzMH0.mjkiaq80pDEycSB5FNV20dE3HoSArZYBtPBBbq8_C_U",
 									"type": "string"
 								}
 							]
 						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/delete/:dpi",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"virtualBank",
-								"v1",
-								"user",
-								"delete",
-								":dpi"
-							],
-							"variable": [
-								{
-									"key": "dpi",
-									"value": "2309765401023"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar usuario",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTk1MzYsImV4cCI6MTc0OTAyMzEzNn0.baO0unHVPx9qL0XLs8kQ7YWmqLv5WmWKdxxP4-A_Jn8",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/search/:dpi",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"virtualBank",
-								"v1",
-								"user",
-								"search",
-								":dpi"
-							],
-							"variable": [
-								{
-									"key": "dpi",
-									"value": "2987654323435"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "Ver perfil",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmN2I4YzJlYTY3Y2QwYTRlYWIzYWUiLCJpYXQiOjE3NDkwNjgwOTcsImV4cCI6MTc0OTA3MTY5N30.ziF-RNrXSWzriq1TZU-vlPTFj0ECYAxkaKq0-oBCDXk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/profile",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"virtualBank",
-								"v1",
-								"user",
-								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Actualizar perfil",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmN2I4YzJlYTY3Y2QwYTRlYWIzYWUiLCJpYXQiOjE3NDkwNjgwOTcsImV4cCI6MTc0OTA3MTY5N30.ziF-RNrXSWzriq1TZU-vlPTFj0ECYAxkaKq0-oBCDXk",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODBmZjMwYWZmMWMwOTUwZjNjZTQzMzIiLCJpYXQiOjE3NDU4NzkzNTcsImV4cCI6MTc0NTg4Mjk1N30.xgRWHPhFo1RJyid_0iDz8ufx7feiKUVaX_2hTF_zpD0",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Javier\",\r\n    \"surname\": \"Apen Solis\",\r\n    \"directiom\": \"22 calle zona 84\",\r\n    \"workName\": \"Cuadra\",\r\n    \"income\":1000\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -296,7 +190,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/virtualBank/v1/user/update",
+							"raw": "http://localhost:3000/virtualBank/v1/account/deleteAccount/684098dd01408f4e6eed020c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -305,10 +199,294 @@
 							"path": [
 								"virtualBank",
 								"v1",
-								"user",
-								"update"
+								"account",
+								"deleteAccount",
+								"684098dd01408f4e6eed020c"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyYTAxNDA4ZjRlNmVlZDAxZjkiLCJpYXQiOjE3NDkwNjU4MjQsImV4cCI6MTc0OTA2OTQyNH0.YFWLZ1IFXzNXrVsa9BP_jyoqcMVCFclrSqJOnGauHw0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromAccount\": \"5658860231\",\r\n    \"toAccount\": \"7182013851\",\r\n    \"amount\": \"500\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createTransaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createTransaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjUwODIsImV4cCI6MTc0OTA2ODY4Mn0.hPaCUpK8Cnt9uZFRFwe0CjPfIrWB00DV-5yKeq5SElI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fromAccount\": \"7182013851\",\r\n    \"amount\": \"1500\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/createDeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"createDeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjY4OTUsImV4cCI6MTc0OTA3MDQ5NX0.2lxWOYviYWvW2IFdLuGiZtnZH285qqEVSRfM9rHe3dU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"fromAccount\": \"7182013851\",\r\n    \"amount\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/removeDeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"removeDeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By no Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjgxODksImV4cCI6MTc0OTA3MTc4OX0.wC3QM5Tk11ptN2A2pg_In7hZ9dUjLobuMaV9Ef6GVnI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"noAccount\": \"9687101352\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getByMyNoAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getByMyNoAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get History Deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTgyZTAxNDA4ZjRlNmVlZDAxZmUiLCJpYXQiOjE3NDkwNjgxODksImV4cCI6MTc0OTA3MTc4OX0.wC3QM5Tk11ptN2A2pg_In7hZ9dUjLobuMaV9Ef6GVnI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNo\": \"7182013851\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getDepositHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getDepositHistory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Conversor divisas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"USD\",\r\n    \"to\": \"GTQ\",\r\n    \"amount\": \"100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/convertData",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"convertData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFavorites",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODZmMDZkNDg2MmEwMDU4Y2ZkODg3ZjciLCJpYXQiOjE3NTIxMDY4ODUsImV4cCI6MTc1MjExMDQ4NX0.aU-KEFIzzIFtDBGjoDfULZmrV-LZaT4kP4Y1-zYt7Zo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"GTQ\",\r\n    \"type\": \"Monetary\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/virtualBank/v1/account/getFavorites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"virtualBank",
+								"v1",
+								"account",
+								"getFavorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFavorite",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -338,7 +516,69 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"japen\",\r\n    \"password\": \"Contra1234$\"\r\n}",
+					"raw": "{\r\n    \"dpi\":2154630128745,\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dpi\":3032993120108,\r\n    \"password\": \"Josu12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Cliente 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dpi\":3032993120109,\r\n    \"password\": \"Josu12345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -370,7 +610,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODNmNzc1M2EyNWYyMTdkZTkwZTAyYWEiLCJpYXQiOjE3NDkwMTY5NTMsImV4cCI6MTc0OTAyMDU1M30.qNibsGEuCfqvUdo54tq7VU8Zk8_zNYAS5TYGfGhBPJQ",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
 							"type": "string"
 						}
 					]
@@ -379,7 +619,48 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Javier\",\r\n    \"surname\": \"Solis\",\r\n    \"username\": \"javier2\",\r\n    \"password\": \"Contra1234$\",\r\n    \"dpi\": 2309765401023,\r\n    \"direction\": \"90 calle zona 1 22\",\r\n    \"email\": \"javier@gmail.com\",\r\n    \"income\": 3000,\r\n    \"phone\": \"12425465\",\r\n    \"workName\": \"Pollo Rey\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Josue\",\r\n    \"surname\": \"Garcia\",\r\n    \"username\": \"jgarcia\",\r\n    \"password\": \"Josu12345\",\r\n    \"dpi\": 3032993120108,\r\n    \"email\": \"jgarcia-2023324@kinal.edu.gt\",\r\n    \"phone\": \"85475965\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/virtualBank/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"virtualBank",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"David\",\r\n    \"surname\": \"Mendez\",\r\n    \"username\": \"dmendez\",\r\n    \"password\": \"Josu12345\",\r\n    \"dpi\": 3032993120109,\r\n    \"email\": \"dmendez-2023324@kinal.edu.gt\",\r\n    \"phone\": \"85475965\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -405,11 +686,33 @@
 		},
 		{
 			"name": "Verify Email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODQwOTcwMDVhYzc0MjJmYjZkZTg5YzQiLCJpYXQiOjE3NDkwNjM1OTIsImV4cCI6MTc0OTA2NzE5Mn0.dutqZqGqE8iOBIhcxL2bl8wgcD8iWhqzvQGa5R2YF_s",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/:code",
+					"raw": "http://localhost:3000/virtualBank/v1/auth/verify/915701",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -420,13 +723,7 @@
 						"v1",
 						"auth",
 						"verify",
-						":code"
-					],
-					"variable": [
-						{
-							"key": "code",
-							"value": "642660"
-						}
+						"915701"
 					]
 				}
 			},

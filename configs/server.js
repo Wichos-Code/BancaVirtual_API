@@ -7,6 +7,7 @@ import { swaggerDocs, swaggerUi } from "./swagger.js";
 import apiLimiter from "../src/middlewares/request-limit.js";
 import authRoutes from "../src/auth/auth.routes.js"
 import userRoutes from "../src/user/user.routes.js"
+import accountRoutes from "../src/account/account.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({extended: false}))
@@ -36,6 +37,7 @@ const routes = (app) => {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
     app.use("/virtualBank/v1/auth", authRoutes)
     app.use("/virtualBank/v1/user", userRoutes)
+    app.use("/virtualBank/v1/account", accountRoutes)
 }
 
 const connectDB = async () => {
