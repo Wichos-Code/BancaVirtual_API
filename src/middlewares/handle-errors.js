@@ -1,12 +1,12 @@
 export const handleErrors = (err, req, res, next) => {
-    if (err.status === 400 || err.errors) {
-        return res.status(400).json({
-            success: false,
-            errors: err.errors
-        });
-    }
-    return res.status(500).json({
-        success: false,
-        message: err.message
-    });
-}
+  console.error(err);
+
+  const statusCode = err.statusCode || 500;
+
+  const message = err.message || 'Ocurrió un error interno en el servidor.';
+
+  res.status(statusCode).json({
+    success: false,
+    message,
+  });
+};

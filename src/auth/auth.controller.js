@@ -132,7 +132,8 @@ export const login = async (req, res) => {
             userDetails: {
                 token: token,
                 name: user.name,
-                surname: user.surname
+                surname: user.surname,
+                role: user.role
             }
         })
     }catch(err){
