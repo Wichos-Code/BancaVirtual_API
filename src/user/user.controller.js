@@ -1,5 +1,5 @@
 import User from "./user.model.js"
-
+import { hash } from "argon2";
 // FUNCIONES PARA ADMINISTRADORES
 
 export const getUsers = async (req,res) => {
@@ -24,6 +24,62 @@ export const getUsers = async (req,res) => {
         })
     }
 }
+
+export const createUserAdmin = async (req, res) => {
+    try {
+        const data = req.body;
+
+        // Validaciones básicas antes de proceder
+        if (!data.username || !data.email || !data.password || !data.dpi || !data.name || !data.surname) {
+            return res.status(400).json({ message: "Campos obligatorios faltantes." });
+        }
+
+        // Verificar si el username o email ya existen
+        const existingUserByUsername = await User.findOne({ username: data.username });
+        if (existingUserByUsername) {
+            return res.status(400).json({ message: "El nombre de usuario ya existe." });
+        }
+        const existingUserByEmail = await User.findOne({ email: data.email });
+        if (existingUserByEmail) {
+            return res.status(400).json({ message: "El correo electrónico ya está registrado." });
+        }
+        const existingUserByDpi = await User.findOne({ dpi: data.dpi });
+        if (existingUserByDpi) {
+            return res.status(400).json({ message: "El DPI ya está registrado." });
+        }
+
+
+        const encryptedPassword = await hash(data.password);
+        data.password = encryptedPassword;
+
+        // Si el admin crea el usuario, el status puede ser true por defecto
+        // Y no se necesita token de verificación
+        data.status = true; // El admin lo activa directamente
+        data.verificationToken = undefined;
+        data.verificationTokenExpiresAt = undefined;
+
+        // Asegurarse de que el rol enviado sea uno de los válidos en el enum
+        const validRoles = ["ADMIN_ROLE", "CLIENT_ROLE", "SUPERVISOR_ROLE"];
+        if (data.role && !validRoles.includes(data.role)) {
+            return res.status(400).json({ message: "Rol inválido." });
+        }
+        // Si no se envía un rol, el modelo de usuario asignará CLIENT_ROLE por defecto
+
+        const newUser = await User.create(data);
+
+        return res.status(201).json({
+            message: "Usuario creado por administrador con éxito",
+            user: newUser
+        });
+
+    } catch (err) {
+        console.error("Error al crear usuario por administrador:", err.message);
+        return res.status(500).json({
+            message: "Error al crear usuario por administrador",
+            error: err.message
+        });
+    }
+};
 
 export const getUser = async(req,res) => {
     const { dpi } = req.params

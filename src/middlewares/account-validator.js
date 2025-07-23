@@ -66,3 +66,24 @@ export const addFavorite = [
     validateFields,
     handleErrors
 ]
+
+export const mostActiveAccountsValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE", "SUPERVISOR_ROLE"),
+    validateFields,
+    handleErrors
+]
+
+export const accountDetailsForAdminValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE", "SUPERVISOR_ROLE"),
+    validateFields,
+    handleErrors
+]
+
+export const reverseDepositValidator = [
+    validateJWT,
+    hasRoles("ADMIN_ROLE", "SUPERVISOR_ROLE"),
+    validateFields,
+    handleErrors
+]

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getUsers, updateUserA, deleteUserA, getUser, getProfileInfo, updateUser } from "./user.controller.js";
-import { getUsersValidator, updateUserAValidator, deleteUserAValidator, getUserValidator, getProfileInfoValidator, updateUserValidator } from "../middlewares/user-validator.js";
+import { getUsers, createUserAdmin, updateUserA, deleteUserA, getUser, getProfileInfo, updateUser } from "./user.controller.js";
+import { getUsersValidator, createUserAdminValidator, updateUserAValidator, deleteUserAValidator, getUserValidator, getProfileInfoValidator, updateUserValidator } from "../middlewares/user-validator.js";
 
 const router = Router()
 
@@ -22,6 +22,12 @@ router.get(
     getUsersValidator,
     getUsers
 )
+
+router.post(
+    "/createUser", // Ruta específica para que el admin cree usuarios
+    createUserAdminValidator, // Un middleware de validación para esta ruta (opcional pero recomendado)
+    createUserAdmin
+);
 
 /**
  * @swagger

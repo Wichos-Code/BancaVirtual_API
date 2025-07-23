@@ -1,4 +1,6 @@
 import Account from "./account.model.js";
+import Transaction from "../transaction/transaction.model.js";
+import User from "../user/user.model.js"; 
 import axios from "axios";
 
 const generateRandomAccountNumber = () => {
@@ -7,36 +9,104 @@ const generateRandomAccountNumber = () => {
 
 export const createAccount = async (req, res) => {
     try {
-        const data = req.body;
-        const user = req.usuario;
+        const { amount, currency, type, targetDPI, targetUsername } = req.body; // Ahora esperamos DPI o username
+        const adminUser = req.usuario; // El usuario que está haciendo la solicitud (admin/supervisor)
 
-        data.user = user._id;
+        // 1. Validar que solo ADMIN_ROLE o SUPERVISOR_ROLE puedan crear cuentas para otros
+        if (adminUser.role !== "ADMIN_ROLE" && adminUser.role !== "SUPERVISOR_ROLE") {
+            return res.status(403).json({
+                success: false,
+                message: "Acceso denegado. Solo administradores y supervisores pueden crear cuentas.",
+            });
+        }
 
+        // 2. Validar que se proporcione DPI o username (pero no ambos, o que al menos uno exista)
+        if (!targetDPI && !targetUsername) {
+            return res.status(400).json({
+                success: false,
+                message: "Debe proporcionar el DPI o el nombre de usuario del cliente para crear la cuenta.",
+            });
+        }
+        if (targetDPI && targetUsername) {
+            return res.status(400).json({
+                success: false,
+                message: "Por favor, proporcione solo el DPI o solo el nombre de usuario, no ambos.",
+            });
+        }
+
+        let targetUser = null;
+
+        // 3. Buscar al usuario por DPI o username
+        if (targetDPI) {
+            // CORRECCIÓN: Usar 'dpi' en minúsculas
+            targetUser = await User.findOne({ dpi: targetDPI.trim() });
+        } else if (targetUsername) {
+            targetUser = await User.findOne({ username: targetUsername.trim() });
+        }
+
+        if (!targetUser) {
+            return res.status(404).json({
+                success: false,
+                message: "Usuario no encontrado. Verifique el DPI o nombre de usuario proporcionado.",
+            });
+        }
+
+        // 4. Construir los datos de la nueva cuenta
+        const accountData = {
+            user: targetUser._id, // Asignar la cuenta al usuario encontrado
+            amount: amount || 0, // Si no se especifica, iniciar con 0
+            currency: currency,
+            type: type,
+            status: true // Por defecto, la cuenta se crea activa
+        };
+
+        // 5. Generar un número de cuenta único
         let newAccountNumber;
         let exist = true;
-
         while (exist) {
             newAccountNumber = generateRandomAccountNumber();
             const existingAccount = await Account.findOne({ noAccount: newAccountNumber });
-
             if (!existingAccount) {
                 exist = false;
             }
         }
-        data.noAccount = newAccountNumber;
+        accountData.noAccount = newAccountNumber;
 
-        const newAccount = new Account(data);
+        // 6. Crear y guardar la nueva cuenta
+        const newAccount = new Account(accountData);
         await newAccount.save();
+
+        // 7. (Opcional) Asociar la nueva cuenta al usuario en su modelo de usuario
+        // Esto depende de cómo tengas tu modelo de usuario. Si el usuario tiene un array de `accounts`
+        // por ejemplo: user.accounts.push(newAccount._id); await user.save();
+        // Si no lo tienes, o lo manejas solo desde el lado de Account, puedes omitir este paso.
+        // Aquí un ejemplo si el modelo de usuario tuviera un campo `accounts`:
+        if (targetUser.accounts) { // Asumiendo que User.model.js tiene un array `accounts`
+             targetUser.accounts.push(newAccount._id);
+             await targetUser.save();
+        }
+
 
         res.status(201).json({
             success: true,
-            message: "Cuenta creada correctamente",
+            message: `Cuenta creada correctamente para el usuario ${targetUser.username}.`,
             account: newAccount,
+            owner: {
+                id: targetUser._id,
+                name: targetUser.name,
+                username: targetUser.username,
+                dpi: targetUser.dpi // CORRECCIÓN: Aquí también para la respuesta
+            }
         });
     } catch (error) {
+        console.error("Error al crear la cuenta:", error); // Log para depuración
+        let errorMessage = "Error interno al crear la cuenta.";
+        if (error.code === 11000) { // Error de duplicidad de MongoDB
+            errorMessage = "Ya existe una cuenta con el número generado (intenta de nuevo) o un problema de unicidad.";
+        }
         res.status(500).json({
             success: false,
-            message: "Error al crear la cuenta",
+            message: errorMessage,
             error: error.message,
         });
     }
@@ -522,4 +592,233 @@ export const addFavoriteAccount = async (req, res) => {
   }
 };
 
+export const getMostActiveAccounts = async (req, res) => {
+    try {
+        const user = req.usuario;
 
+        if (user.role !== "ADMIN_ROLE" && user.role !== "SUPERVISOR_ROLE") {
+            return res.status(403).json({
+                success: false,
+                message: "No tienes permisos para realizar esta acción.",
+            });
+        }
+
+        const mostActiveAccounts = await Transaction.aggregate([
+            {
+                $match: {
+                    type: { $in: ["TRANSFER", "DEPOSIT", "WITHDRAWAL"] } // Incluir todos los tipos de movimiento
+                }
+            },
+            {
+                $group: {
+                    _id: "$fromAccount", // Agrupar por la cuenta de origen
+                    totalMovement: { $sum: "$amount" }
+                }
+            },
+            {
+                $lookup: {
+                    from: "accounts", // Nombre de la colección de cuentas
+                    localField: "_id",
+                    foreignField: "noAccount",
+                    as: "accountInfo"
+                }
+            },
+            {
+                $unwind: "$accountInfo" // Desglosar el array accountInfo
+            },
+            {
+                $lookup: {
+                    from: "users", // Nombre de la colección de usuarios
+                    localField: "accountInfo.user",
+                    foreignField: "_id",
+                    as: "userInfo"
+                }
+            },
+            {
+                $unwind: "$userInfo" // Desglosar el array userInfo
+            },
+            {
+                $project: {
+                    _id: 0,
+                    noAccount: "$_id",
+                    ownerName: "$userInfo.name",
+                    ownerUsername: "$userInfo.username",
+                    totalMovement: 1,
+                    currency: "$accountInfo.currency",
+                    currentBalance: "$accountInfo.amount"
+                }
+            },
+            {
+                $sort: { totalMovement: -1 } // Ordenar de mayor a menor movimiento
+            }
+        ]);
+
+        res.status(200).json({
+            success: true,
+            message: "Cuentas con más movimientos obtenidas exitosamente",
+            accounts: mostActiveAccounts,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las cuentas con más movimientos",
+            error: error.message,
+        });
+    }
+};
+
+
+export const getAccountDetailsForAdmin = async (req, res) => {
+    try {
+        const user = req.usuario;
+        const { id } = req.params; // ID de la cuenta, no del usuario
+
+        if (user.role !== "ADMIN_ROLE" && user.role !== "SUPERVISOR_ROLE") {
+            return res.status(403).json({
+                success: false,
+                message: "No tienes permisos para realizar esta acción.",
+            });
+        }
+
+        const account = await Account.findById(id).populate("user", "name username email");
+
+        if (!account) {
+            return res.status(404).json({
+                success: false,
+                message: "Cuenta no encontrada.",
+            });
+        }
+
+        // Obtener los últimos 5 movimientos de la cuenta
+        const transactions = await Transaction.find({
+            $or: [
+                { fromAccount: account.noAccount },
+                { toAccount: account.noAccount }
+            ]
+        })
+        .sort({ createdAt: -1 }) // Ordenar por fecha de creación descendente (más recientes primero)
+        .limit(5); // Limitar a los últimos 5 movimientos
+
+        res.status(200).json({
+            success: true,
+            message: "Detalles de la cuenta obtenidos exitosamente",
+            accountDetails: {
+                _id: account._id,
+                noAccount: account.noAccount,
+                currency: account.currency,
+                amount: account.amount, // Saldo actual
+                type: account.type,
+                status: account.status,
+                user: account.user, // Información del propietario de la cuenta
+                last5Movements: transactions, // Los últimos 5 movimientos
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener los detalles de la cuenta",
+            error: error.message,
+        });
+    }
+};
+
+export const reverseDeposit = async (req, res) => {
+    try {
+        const adminUser = req.usuario;
+        const { transactionId } = req.body; // ID de la transacción de depósito a revertir
+
+        if (adminUser.role !== "ADMIN_ROLE" && adminUser.role !== "SUPERVISOR_ROLE") {
+            return res.status(403).json({
+                success: false,
+                message: "No tienes permisos para realizar esta acción.",
+            });
+        }
+
+        const depositTransaction = await Transaction.findById(transactionId);
+
+        if (!depositTransaction) {
+            return res.status(404).json({
+                success: false,
+                message: "Transacción de depósito no encontrada.",
+            });
+        }
+
+        if (depositTransaction.type !== "DEPOSIT") {
+            return res.status(400).json({
+                success: false,
+                message: "Solo se pueden revertir transacciones de tipo 'DEPOSIT'.",
+            });
+        }
+
+        // Verificar si ya ha pasado más de 1 minuto
+        const oneMinuteAgo = new Date(Date.now() - 60 * 1000); // 60 segundos * 1000 ms
+        if (depositTransaction.createdAt < oneMinuteAgo) {
+            return res.status(400).json({
+                success: false,
+                message: "No se puede revertir el depósito, ha pasado más de 1 minuto.",
+            });
+        }
+
+        // Verificar si el depósito ya fue revertido para evitar dobles reversiones
+        const existingReversal = await Transaction.findOne({
+            originalTransaction: transactionId,
+            type: "DEPOSIT_REVERSAL"
+        });
+
+        if (existingReversal) {
+            return res.status(400).json({
+                success: false,
+                message: "Este depósito ya ha sido revertido previamente.",
+            });
+        }
+
+        // Revertir el monto del depósito de la cuenta
+        const targetAccount = await Account.findOne({ noAccount: depositTransaction.fromAccount }); // La cuenta donde se hizo el depósito
+
+        if (!targetAccount) {
+            return res.status(404).json({
+                success: false,
+                message: "Cuenta asociada al depósito no encontrada.",
+            });
+        }
+
+        if (targetAccount.amount < depositTransaction.amount) {
+            return res.status(400).json({
+                success: false,
+                message: "Fondos insuficientes en la cuenta para revertir el depósito.",
+            });
+        }
+
+        targetAccount.amount -= depositTransaction.amount;
+        await targetAccount.save();
+
+        // Registrar la transacción de reversión
+        const reversalTransaction = await Transaction.create({
+            fromAccount: depositTransaction.fromAccount,
+            amount: depositTransaction.amount,
+            type: "DEPOSIT_REVERSAL", // Nuevo tipo de transacción para reversiones
+            currency: depositTransaction.currency,
+            user: depositTransaction.user,
+            originalTransaction: depositTransaction._id, // Referencia a la transacción original
+            notes: "Depósito revertido por administrador"
+        });
+
+        // Opcional: Marcar la transacción original como revertida (si tu esquema Transaction tuviera un campo `isReversed`)
+        // depositTransaction.isReversed = true;
+        // await depositTransaction.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Depósito revertido exitosamente.",
+            reversalDetails: reversalTransaction,
+            updatedAccountBalance: targetAccount.amount,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al revertir el depósito.",
+            error: error.message,
+        });
+    }
+};

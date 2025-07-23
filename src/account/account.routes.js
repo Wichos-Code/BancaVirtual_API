@@ -1,6 +1,10 @@
 import { Router } from "express"
-import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit, getFavorites, addFavoriteAccount } from "./account.controller.js"
-import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator, getFavoritesValidator, addFavorite } from "../middlewares/account-validator.js"
+import { createAccount, getAccountById, getMyAccount, getAllAccounts, deleteAccount, deposit, getMyNoAccount, getAccountTransactions, transaction, removeDeposit, getFavorites, addFavoriteAccount, getMostActiveAccounts,
+    getAccountDetailsForAdmin,
+    reverseDeposit } from "./account.controller.js"
+import { createAccountValidator, getAccountByIdValidator, getAccountsValidator, getMyAccountsValidator, deleteAccountValidator, depositAccountValidator, getFavoritesValidator, addFavorite, mostActiveAccountsValidator,
+    accountDetailsForAdminValidator, reverseDepositValidator
+ } from "../middlewares/account-validator.js"
 
 const router = Router()
 
@@ -678,5 +682,23 @@ router.get("/getFavorites", getFavoritesValidator, getFavorites)
  */
 
 router.put("/addFavorite", addFavorite, addFavoriteAccount)
+
+router.get(
+    "/admin/mostActiveAccounts",
+    mostActiveAccountsValidator,
+    getMostActiveAccounts
+);
+
+router.get(
+    "/admin/accountDetails/:id",
+    accountDetailsForAdminValidator,
+    getAccountDetailsForAdmin
+);
+
+router.post(
+    "/admin/reverseDeposit",
+    reverseDepositValidator,
+    reverseDeposit
+);
 
 export default router
