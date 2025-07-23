@@ -683,17 +683,220 @@ router.get("/getFavorites", getFavoritesValidator, getFavorites)
 
 router.put("/addFavorite", addFavorite, addFavoriteAccount)
 
+/**
+ * @swagger
+ * /account/admin/mostActiveAccounts:
+ *   get:
+ *     summary: Obtener las cuentas con más movimientos (transferencias, depósitos, retiros)
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Cuentas más activas obtenidas exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 accounts:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       noAccount:
+ *                         type: number
+ *                       ownerName:
+ *                         type: string
+ *                       ownerUsername:
+ *                         type: string
+ *                       currency:
+ *                         type: string
+ *                       currentBalance:
+ *                         type: number
+ *                       totalMovement:
+ *                         type: number
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
+ *       500:
+ *         description: Error interno del servidor
+ */
+
 router.get(
     "/admin/mostActiveAccounts",
     mostActiveAccountsValidator,
     getMostActiveAccounts
 );
 
+/**
+ * @swagger
+ * /account/admin/accountDetails/{id}:
+ *   get:
+ *     summary: Obtener detalles de una cuenta por ID (admin/supervisor)
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la cuenta (MongoDB)
+ *     responses:
+ *       200:
+ *         description: Detalles de la cuenta obtenidos exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 accountDetails:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     noAccount:
+ *                       type: number
+ *                     currency:
+ *                       type: string
+ *                     amount:
+ *                       type: number
+ *                     type:
+ *                       type: string
+ *                     status:
+ *                       type: boolean
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         username:
+ *                           type: string
+ *                         email:
+ *                           type: string
+ *                     last5Movements:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           fromAccount:
+ *                             type: number
+ *                           toAccount:
+ *                             type: number
+ *                           amount:
+ *                             type: number
+ *                           type:
+ *                             type: string
+ *                           currency:
+ *                             type: string
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
+ *       404:
+ *         description: Cuenta no encontrada
+ *       500:
+ *         description: Error interno del servidor
+ */
+
 router.get(
     "/admin/accountDetails/:id",
     accountDetailsForAdminValidator,
     getAccountDetailsForAdmin
 );
+
+/**
+ * @swagger
+ * /account/admin/accountDetails/{id}:
+ *   get:
+ *     summary: Obtener detalles de una cuenta por ID (admin/supervisor)
+ *     tags: [Account]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la cuenta (MongoDB)
+ *     responses:
+ *       200:
+ *         description: Detalles de la cuenta obtenidos exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 accountDetails:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     noAccount:
+ *                       type: number
+ *                     currency:
+ *                       type: string
+ *                     amount:
+ *                       type: number
+ *                     type:
+ *                       type: string
+ *                     status:
+ *                       type: boolean
+ *                     user:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                         username:
+ *                           type: string
+ *                         email:
+ *                           type: string
+ *                     last5Movements:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           fromAccount:
+ *                             type: number
+ *                           toAccount:
+ *                             type: number
+ *                           amount:
+ *                             type: number
+ *                           type:
+ *                             type: string
+ *                           currency:
+ *                             type: string
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
+ *       404:
+ *         description: Cuenta no encontrada
+ *       500:
+ *         description: Error interno del servidor
+ */
 
 router.post(
     "/admin/reverseDeposit",
