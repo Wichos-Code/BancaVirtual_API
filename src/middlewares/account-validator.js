@@ -7,7 +7,7 @@ import { accountExists } from "../helpers/db-validators.js";
 
 export const createAccountValidator = [
     validateJWT,
-    hasRoles("CLIENT_ROLE"),
+    hasRoles("ADMIN_ROLE", "SUPERVISOR_ROLE"),
     body("type").notEmpty().withMessage("Debes de seleccionar un tipo de cuenta"),
     body("currency").notEmpty().withMessage("Debes de seleccionar el tipo de moneda"),
     validateFields,

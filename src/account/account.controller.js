@@ -16,12 +16,9 @@ export const createAccount = async (req, res) => {
         let exist = true;
 
         while (exist) {
-            //Por medio de la funcion anterior generamos un numero de cuenta aleatorio
             newAccountNumber = generateRandomAccountNumber();
-            //Verificamos si el numero de cuenta existe en la base de datos
             const existingAccount = await Account.findOne({ noAccount: newAccountNumber });
 
-            //Si el numero de cuenta no existe en la db salimos del bucle.
             if (!existingAccount) {
                 exist = false;
             }
