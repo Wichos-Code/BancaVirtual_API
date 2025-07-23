@@ -94,7 +94,6 @@ export const getMyNoAccount = async (req, res) => {
             try {
                 const response = await axios.get(url);
                 if (response.data?.result === 'success') {
-                    //Se retornan los resultados de las conversiones a los diversos tipos de moneda.
                     return { [target]: response.data.conversion_result };
                 } else {
                     return { [target]: null };
@@ -215,37 +214,29 @@ export const transaction = async (req, res) => {
     const userId = req.usuario.id;
     const { fromAccount, toAccount, amount } = req.body;
 
-    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
     if (!fromAccount || !toAccount || !amount || amount <= 0) {
         return res.status(400).json({ error: "Datos inválidos para el depósito" });
     }
 
     try {
-        //Con esto evitamos que una persona transfiera dinero a su misma cuenta.
         if (fromAccount === toAccount) {
             return res.status(400).json({ error: "No puedes transferir dinero a la misma cuenta" });
         }
-
-        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
         const originAccount = await Account.findOne({
             noAccount: fromAccount,
             user: userId,
             status: true
         });
-
         if (!originAccount) {
             return res.status(404).json({ error: "Tu cuenta de origen no fue encontrada o no está activa" });
         }
-
         if (originAccount.amount < amount) {
             return res.status(400).json({ error: "Fondos insuficientes en la cuenta de origen" });
         }
-
         const targetAccount = await Account.findOne({
             noAccount: toAccount,
             status: true
         });
-
         if (!targetAccount) {
             return res.status(404).json({ error: "Cuenta de destino no encontrada o inactiva" });
         }
@@ -268,9 +259,6 @@ export const transaction = async (req, res) => {
         await originAccount.save();
         await targetAccount.save();
 
-        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
-        o retiros que realicen en las cuentas.
-        */
         await Transaction.create({
             fromAccount: originAccount.noAccount,
             toAccount: targetAccount.noAccount,
@@ -337,13 +325,11 @@ export const deposit = async (req, res) => {
     const userId = req.usuario.id;
     const { fromAccount, amount } = req.body;
 
-    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
     if (!fromAccount || !amount || amount <= 0) {
         return res.status(400).json({ error: "Datos inválidos para el depósito" });
     }
 
     try {
-        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
         const originAccount = await Account.findOne({
             noAccount: fromAccount,
             user: userId,
@@ -358,9 +344,7 @@ export const deposit = async (req, res) => {
 
         await originAccount.save();
 
-        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
-        o retiros que realicen en las cuentas.
-        */
+
         await Transaction.create({
             fromAccount: originAccount.noAccount,
             amount,
@@ -388,13 +372,11 @@ export const removeDeposit = async (req, res) => {
     const userId = req.usuario.id;
     const { fromAccount, amount } = req.body;
 
-    // Verifico que los datos recibidos en el cuerpo de la solicitud sean válidos
     const numericAmount = parseFloat(amount);
     if (!fromAccount || isNaN(numericAmount) || numericAmount <= 0) {
         return res.status(400).json({ error: "Debe proporcionar una cuenta válida y un monto mayor a cero" });
     }
     try {
-        // Se busca la cuenta de origen del usuario para verificar que exista y esté activa
         const originAccount = await Account.findOne({
             noAccount: fromAccount,
             user: userId,
@@ -414,9 +396,8 @@ export const removeDeposit = async (req, res) => {
         originAccount.amount -= amount;
         await originAccount.save();
 
-        /*Aqui se guarda la transaccion para que pueda haber un registro de los depositos, transferencias 
-        o retiros que realicen en las cuentas.
-        */
+
+        
         await Transaction.create({
             fromAccount: originAccount.noAccount,
             amount,
